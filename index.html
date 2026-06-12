@@ -5,143 +5,188 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--==================== GOOGLE FONTS ====================-->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!--==================== SEO ====================-->
+    <title>Made Rahano — Software Engineer · Backend & Infrastructure</title>
+    <meta name="description" content="Made Rahano is a Software Engineer specializing in backend development, DevOps, and cloud infrastructure with Go, Java, Python, AWS, and Kubernetes. Explore projects, experience, and more.">
+    <meta name="author" content="Made Rahano Satryani Widhi">
+    <meta name="keywords" content="Made Rahano, Software Engineer, Backend Developer, DevOps, Cloud, Go, Java, Python, AWS, Kubernetes, Portfolio">
+    <meta name="theme-color" content="#0F172A">
+    <link rel="canonical" href="https://maderahano.github.io/">
 
-    <!--==================== UNICONS ====================-->
+    <!--==================== OPEN GRAPH / TWITTER ====================-->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Made Rahano — Software Engineer">
+    <meta property="og:description" content="Backend & Infrastructure engineer. Go · Java · Python · AWS · Kubernetes. Projects, experience, mini-games and more.">
+    <meta property="og:url" content="https://maderahano.github.io/">
+    <meta property="og:image" content="https://maderahano.github.io/assets/img/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Made Rahano — Software Engineer">
+    <meta name="twitter:description" content="Backend & Infrastructure engineer. Go · Java · Python · AWS · Kubernetes.">
+    <meta name="twitter:image" content="https://maderahano.github.io/assets/img/profile.jpg">
+
+    <!--==================== FAVICON ====================-->
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+
+    <!--==================== FONTS ====================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!--==================== ICONS (Unicons UI + Devicon tech logos) ====================-->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
 
-    <!--==================== CSS ====================-->
-    <link rel="stylesheet" href="assets/img/css/style.css">
+    <!--==================== STYLES ====================-->
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-    <title>Made Rahano | Software Engineer</title>
+    <!--==================== STRUCTURED DATA ====================-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Made Rahano Satryani Widhi",
+      "alternateName": "Made Rahano",
+      "jobTitle": "Software Engineer",
+      "url": "https://maderahano.github.io/",
+      "sameAs": [
+        "https://github.com/maderahano",
+        "https://www.linkedin.com/in/maderahano/",
+        "https://www.instagram.com/md.rahano/"
+      ],
+      "knowsAbout": ["Backend Development", "DevOps", "Cloud Infrastructure", "Go", "Java", "Kubernetes", "AWS"]
+    }
+    </script>
 </head>
 <body>
+    <!--==================== LOADER ====================-->
+    <div id="loader">
+        <div class="loader__logo">&lt;MR/&gt;</div>
+        <div class="loader__bar"><span></span></div>
+        <div class="loader__text">Loading portfolio…</div>
+    </div>
+
+    <!--==================== SCROLL PROGRESS + CURSOR + PARTICLES ====================-->
+    <div id="scroll-progress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <canvas id="particles"></canvas>
+
     <!--==================== HEADER ====================-->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav__logo">Made Rahano</a>
+            <a href="#home" class="nav__logo">&lt;<span>Made</span>Rahano<span class="dot">/&gt;</span></a>
 
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">Home</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">About</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link">Skills</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#education" class="nav__link">Education</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#experience" class="nav__link">Experience</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#portfolio" class="nav__link">Portfolio</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#testimonial" class="nav__link">Testimonial</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#game" class="nav__link">Mini Game</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link">Contact</a>
-                    </li>
+                    <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="#experience" class="nav__link">Experience</a></li>
+                    <li class="nav__item"><a href="#education" class="nav__link">Education</a></li>
+                    <li class="nav__item"><a href="#portfolio" class="nav__link">Portfolio</a></li>
+                    <li class="nav__item"><a href="#testimonial" class="nav__link">Testimonials</a></li>
+                    <li class="nav__item"><a href="#games" class="nav__link">Mini Games</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
                 </ul>
-                <i class="uil uil-times nav__close" id="nav-close"></i>
+                <i class="uil uil-times nav__close" id="nav-close" aria-label="Close menu"></i>
             </div>
 
             <div class="nav__btns">
-                <i class="uil uil-moon change-theme" id="theme-button"></i>
-                <div class="nav__toggle" id="nav-toggle">
+                <span class="egg-counter" id="egg-counter" title="Hidden easter eggs found">
+                    <i class="uil uil-bug"></i> <span id="egg-count">0</span>/5
+                </span>
+                <i class="uil uil-moon change-theme" id="theme-button" role="button" aria-label="Toggle theme" tabindex="0"></i>
+                <div class="nav__toggle" id="nav-toggle" role="button" aria-label="Open menu" tabindex="0">
                     <i class="uil uil-apps"></i>
                 </div>
             </div>
         </nav>
     </header>
+    <div class="nav__backdrop" id="nav-backdrop"></div>
 
-    <!--==================== MAIN ====================-->
     <main class="main">
         <!--==================== HOME ====================-->
         <section class="home section" id="home">
             <div class="home__container container">
-                <div class="home__content">
-                    <div class="home__data">
-                        <span class="home__greeting">Hello, I'm</span>
-                        <h1 class="home__title">Made Rahano</h1>
-                        <h3 class="home__subtitle">Software Engineer</h3>
-                        <p class="home__description">
-                            Passionate about building scalable systems, automating infrastructure,
-                            and solving complex problems with clean, efficient code.
-                        </p>
-                        <div class="home__buttons">
-                            <a href="#contact" class="button">
-                                Get in Touch <i class="uil uil-arrow-right"></i>
-                            </a>
-                            <a download="" href="assets/pdf/CV_Made-Rahano.pdf" class="button button--outline">
-                                Download CV <i class="uil uil-download-alt"></i>
-                            </a>
-                        </div>
-                        <div class="home__social">
-                            <a href="https://www.linkedin.com/in/maderahano/" target="_blank" class="home__social-icon">
-                                <i class="uil uil-linkedin-alt"></i>
-                            </a>
-                            <a href="https://github.com/maderahano" target="_blank" class="home__social-icon">
-                                <i class="uil uil-github-alt"></i>
-                            </a>
-                            <a href="https://www.instagram.com/md.rahano/" target="_blank" class="home__social-icon">
-                                <i class="uil uil-instagram"></i>
-                            </a>
-                        </div>
+                <div class="home__data reveal-l">
+                    <span class="home__greeting"><i class="uil uil-corner-down-right-alt"></i> Hello, I'm</span>
+                    <h1 class="home__title">Made <span class="text-grad">Rahano</span></h1>
+                    <div class="home__typed-wrap">I'm a <span class="home__typed" id="typed"></span><span class="cursor-blink">|</span></div>
+                    <p class="home__description">
+                        Passionate about building scalable systems, automating infrastructure,
+                        and solving complex problems with clean, efficient code. Backend, DevOps &amp; cloud are my playground.
+                    </p>
+                    <div class="home__buttons">
+                        <a href="assets/pdf/Made-Rahano-CV.pdf" download class="button">
+                            Download Resume <i class="uil uil-import"></i>
+                        </a>
+                        <a href="#portfolio" class="button button--outline">
+                            View Portfolio <i class="uil uil-apps"></i>
+                        </a>
+                        <a href="#contact" class="button button--ghost">
+                            Contact Me <i class="uil uil-message"></i>
+                        </a>
                     </div>
-
-                    <div class="home__img">
-                        <img src="assets/img/ProfessionalPhoto.jpg" alt="Made Rahano">
+                    <div class="home__social">
+                        <a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener" class="home__social-icon" aria-label="LinkedIn"><i class="uil uil-linkedin-alt"></i></a>
+                        <a href="https://github.com/maderahano" target="_blank" rel="noopener" class="home__social-icon" aria-label="GitHub"><i class="uil uil-github-alt"></i></a>
+                        <a href="https://www.instagram.com/md.rahano/" target="_blank" rel="noopener" class="home__social-icon" aria-label="Instagram"><i class="uil uil-instagram"></i></a>
                     </div>
                 </div>
+
+                <div class="home__img-wrap reveal-r">
+                    <div class="home__blob"></div>
+                    <img src="assets/img/profile.jpg" alt="Made Rahano" class="home__photo" width="330" height="330">
+                    <span class="home__badge home__badge--1 glass"><i class="uil uil-server"></i> Backend</span>
+                    <span class="home__badge home__badge--2 glass"><i class="uil uil-cloud"></i> Cloud / DevOps</span>
+                </div>
             </div>
+            <a href="#about" class="home__scroll"><span>Scroll</span><i class="uil uil-mouse-alt"></i></a>
         </section>
 
         <!--==================== ABOUT ====================-->
         <section class="about section" id="about">
             <div class="container">
-                <h2 class="section__title">About Me</h2>
-                <span class="section__subtitle">My Introduction</span>
+                <h2 class="section__title reveal">About Me</h2>
+                <span class="section__subtitle reveal">my_introduction</span>
 
                 <div class="about__container">
-                    <img src="assets/img/about.jpeg" alt="About Me" class="about__img">
+                    <div class="about__img-wrap reveal-l">
+                        <img src="assets/img/about.jpg" alt="Made Rahano at work" class="about__img" width="500" height="500">
+                    </div>
 
-                    <div class="about__data">
+                    <div class="about__data reveal-r">
                         <p class="about__description">
-                            I am a Software Engineer with over 3 years of experience specializing in backend development,
-                            DevOps practices, and cloud infrastructure. I thrive on building robust, scalable systems and
-                            automating complex workflows. My core expertise lies in Go, Java, and Python, complemented by
-                            hands-on experience with cloud platforms and infrastructure-as-code tools.
+                            I'm a <strong>Software Engineer</strong> with 3+ years of experience specializing in
+                            backend development, DevOps practices, and cloud infrastructure. I thrive on building robust,
+                            scalable systems and automating complex workflows. My core expertise lives in
+                            <strong>Go, Java and Python</strong>, complemented by hands-on cloud and infrastructure-as-code work.
                         </p>
                         <p class="about__description">
-                            I have a strong interest in AI/ML and continuously explore how machine learning can be integrated
-                            into production systems. I believe in writing clean, maintainable code and fostering collaborative
-                            engineering cultures. Currently exploring Kubernetes, PyTorch, and advanced distributed systems.
+                            My goal is to design systems that are reliable, observable and easy to evolve — and to keep
+                            the developer experience around them sharp. I'm continuously exploring distributed systems,
+                            Kubernetes and how AI/ML fits into production.
                         </p>
 
-                        <div class="about__info">
+                        <div class="about__highlights" id="about-chips"></div>
+
+                        <div class="about__info glass">
                             <div class="about__info-item">
-                                <span class="about__info-title">3+</span>
+                                <span class="about__info-title" data-count="3">0</span>
                                 <span class="about__info-name">Years<br>Experience</span>
                             </div>
                             <div class="about__info-item">
-                                <span class="about__info-title">5+</span>
-                                <span class="about__info-name">Completed<br>Projects</span>
+                                <span class="about__info-title" data-count="10" data-suffix="+">0</span>
+                                <span class="about__info-name">Projects<br>Shipped</span>
                             </div>
                             <div class="about__info-item">
-                                <span class="about__info-title">2+</span>
+                                <span class="about__info-title" data-count="4">0</span>
                                 <span class="about__info-name">Companies<br>Worked</span>
                             </div>
                         </div>
+
+                        <div class="about__cards" id="about-cards"></div>
                     </div>
                 </div>
             </div>
@@ -150,367 +195,186 @@
         <!--==================== SKILLS ====================-->
         <section class="skills section" id="skills">
             <div class="container">
-                <h2 class="section__title">Skills</h2>
-                <span class="section__subtitle">What I Bring to the Table</span>
+                <h2 class="section__title reveal">Skills</h2>
+                <span class="section__subtitle reveal">what_i_work_with</span>
+                <div class="skills__container" id="skills-container"></div>
+            </div>
+        </section>
 
-                <div class="skills__container">
-                    <!--=============== BACKEND ===============-->
-                    <div class="skills__card">
-                        <div class="skills__card-header">
-                            <i class="uil uil-brackets-curly skills__icon"></i>
-                            <h3 class="skills__card-title">Backend Development</h3>
-                        </div>
-                        <ul class="skills__list">
-                            <li><i class="uil uil-check-circle"></i> Go — REST APIs, microservices, concurrency patterns</li>
-                            <li><i class="uil uil-check-circle"></i> Java — Spring Boot, enterprise applications</li>
-                            <li><i class="uil uil-check-circle"></i> Python — Flask, FastAPI, scripting & automation</li>
-                            <li><i class="uil uil-check-circle"></i> C — System programming, memory management</li>
-                            <li><i class="uil uil-check-circle"></i> PostgreSQL, MySQL, Redis, MongoDB</li>
-                            <li><i class="uil uil-check-circle"></i> gRPC, GraphQL, message queues (Kafka, RabbitMQ)</li>
-                        </ul>
-                    </div>
-
-                    <!--=============== DEVOPS ===============-->
-                    <div class="skills__card">
-                        <div class="skills__card-header">
-                            <i class="uil uil-server-network skills__icon"></i>
-                            <h3 class="skills__card-title">DevOps</h3>
-                        </div>
-                        <ul class="skills__list">
-                            <li><i class="uil uil-check-circle"></i> Docker — Containerization, multi-stage builds</li>
-                            <li><i class="uil uil-check-circle"></i> CI/CD — GitHub Actions, GitLab CI, Jenkins</li>
-                            <li><i class="uil uil-check-circle"></i> Monitoring — Prometheus, Grafana, ELK Stack</li>
-                            <li><i class="uil uil-check-circle"></i> Git — Branching strategies, code reviews</li>
-                            <li><i class="uil uil-check-circle"></i> Linux — Shell scripting, system administration</li>
-                        </ul>
-                    </div>
-
-                    <!--=============== INFRASTRUCTURE ===============-->
-                    <div class="skills__card">
-                        <div class="skills__card-header">
-                            <i class="uil uil-cloud skills__icon"></i>
-                            <h3 class="skills__card-title">Infrastructure</h3>
-                        </div>
-                        <ul class="skills__list">
-                            <li><i class="uil uil-check-circle"></i> AWS — EC2, S3, Lambda, RDS, ECS</li>
-                            <li><i class="uil uil-check-circle"></i> Terraform — Infrastructure as Code, modules</li>
-                            <li><i class="uil uil-check-circle"></i> Ansible — Configuration management, playbooks</li>
-                            <li><i class="uil uil-check-circle"></i> Kubernetes — Container orchestration, Helm</li>
-                            <li><i class="uil uil-check-circle"></i> Networking — VPC, Load Balancers, DNS</li>
-                        </ul>
-                    </div>
-
-                    <!--=============== AI ===============-->
-                    <div class="skills__card">
-                        <div class="skills__card-header">
-                            <i class="uil uil-robot skills__icon"></i>
-                            <h3 class="skills__card-title">AI & Machine Learning</h3>
-                        </div>
-                        <ul class="skills__list">
-                            <li><i class="uil uil-check-circle"></i> PyTorch — Neural networks, model training</li>
-                            <li><i class="uil uil-check-circle"></i> Scikit-learn — Classical ML algorithms</li>
-                            <li><i class="uil uil-check-circle"></i> NLP — Text processing, transformers</li>
-                            <li><i class="uil uil-check-circle"></i> Data Analysis — Pandas, NumPy, visualization</li>
-                            <li><i class="uil uil-check-circle"></i> MLOps — Model deployment, experiment tracking</li>
-                        </ul>
-                    </div>
-                </div>
+        <!--==================== EXPERIENCE ====================-->
+        <section class="experience section" id="experience">
+            <div class="container">
+                <h2 class="section__title reveal">Work Experience</h2>
+                <span class="section__subtitle reveal">professional_journey</span>
+                <div class="timeline" id="experience-timeline"></div>
             </div>
         </section>
 
         <!--==================== EDUCATION ====================-->
         <section class="education section" id="education">
             <div class="container">
-                <h2 class="section__title">Education</h2>
-                <span class="section__subtitle">My Academic Journey</span>
-
-                <div class="timeline">
-                    <div class="timeline__item">
-                        <div class="timeline__dot"></div>
-                        <div class="timeline__content">
-                            <h3 class="timeline__title">Bachelor of Applied Science in Informatics Engineering</h3>
-                            <span class="timeline__place">Politeknik Elektronika Negeri Surabaya (PENS)</span>
-                            <span class="timeline__date"><i class="uil uil-calendar-alt"></i> July 2019 - September 2023</span>
-                            <p class="timeline__description">
-                                Focused on software engineering, data structures & algorithms, and system programming.
-                                Gained hands-on experience with microservices architecture, cloud computing, and DevOps practices.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--==================== WORK EXPERIENCE ====================-->
-        <section class="experience section" id="experience">
-            <div class="container">
-                <h2 class="section__title">Work Experience</h2>
-                <span class="section__subtitle">My Professional Journey</span>
-
-                <div class="timeline">
-                    <div class="timeline__item">
-                        <div class="timeline__dot"></div>
-                        <div class="timeline__content">
-                            <h3 class="timeline__title">Backend Infrastructure Engineer</h3>
-                            <span class="timeline__place">Traveloka — South Tangerang</span>
-                            <span class="timeline__date"><i class="uil uil-calendar-alt"></i> April 2024 - Present</span>
-                            <p class="timeline__description">
-                                Implementing infrastructure solutions to improve system efficiency, maintainability, and security.
-                                Upgrading services to Java 21 and Spring Boot 3, migrating CI/CD pipelines from AWS CodeBuild &
-                                CodePipeline to GitHub Actions, and implementing RDS IAM Authentication to enhance database security.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline__item">
-                        <div class="timeline__dot"></div>
-                        <div class="timeline__content">
-                            <h3 class="timeline__title">Software Engineer</h3>
-                            <span class="timeline__place">Jatis Mobile — Jakarta</span>
-                            <span class="timeline__date"><i class="uil uil-calendar-alt"></i> May 2023 - April 2024</span>
-                            <p class="timeline__description">
-                                Developed and maintained back office applications in a fast-paced, multi-industry tech environment.
-                                Collaborated with cross-functional teams to deliver client-requested features using PHP (Laravel) and
-                                Go (Echo, Gin). Applied Domain-Driven Design (DDD) principles to enhance application architecture.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline__item">
-                        <div class="timeline__dot"></div>
-                        <div class="timeline__content">
-                            <h3 class="timeline__title">Backend Engineer Intern</h3>
-                            <span class="timeline__place">Traveloka — South Tangerang</span>
-                            <span class="timeline__date"><i class="uil uil-calendar-alt"></i> August 2022 - December 2022</span>
-                            <p class="timeline__description">
-                                Joined the Infrastructure team to optimize AWS resource usage. Successfully reduced operational
-                                costs by migrating services from EC2 to ECS using Terraform, delivering a more cost-efficient
-                                and scalable infrastructure solution.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline__item">
-                        <div class="timeline__dot"></div>
-                        <div class="timeline__content">
-                            <h3 class="timeline__title">Web Developer Intern</h3>
-                            <span class="timeline__place">PT. PAL — Surabaya</span>
-                            <span class="timeline__date"><i class="uil uil-calendar-alt"></i> October 2021 - January 2022</span>
-                            <p class="timeline__description">
-                                Developed an online internship registration system for the Human Capital Management division
-                                using Laravel, enabling students to apply digitally instead of on-site. The platform streamlined
-                                the application process.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="section__title reveal">Education</h2>
+                <span class="section__subtitle reveal">academic_background</span>
+                <div class="timeline" id="education-timeline"></div>
             </div>
         </section>
 
         <!--==================== PORTFOLIO ====================-->
         <section class="portfolio section" id="portfolio">
             <div class="container">
-                <h2 class="section__title">Portfolio</h2>
-                <span class="section__subtitle">Most Recent Work</span>
-
-                <div class="portfolio__grid">
-                    <div class="portfolio__card">
-                        <div class="portfolio__img-wrapper">
-                            <img src="assets/img/portfolio1.jpg" alt="Project 1" class="portfolio__img">
-                            <div class="portfolio__overlay">
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-github-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="portfolio__info">
-                            <h3 class="portfolio__title">Microservice Platform</h3>
-                            <p class="portfolio__description">A scalable microservice architecture built with Go, gRPC, and Kubernetes for high-throughput processing.</p>
-                            <div class="portfolio__tags">
-                                <span>Go</span>
-                                <span>gRPC</span>
-                                <span>K8s</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="portfolio__card">
-                        <div class="portfolio__img-wrapper">
-                            <img src="assets/img/portfolio2.jpg" alt="Project 2" class="portfolio__img">
-                            <div class="portfolio__overlay">
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-github-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="portfolio__info">
-                            <h3 class="portfolio__title">Infrastructure Automation</h3>
-                            <p class="portfolio__description">Automated cloud infrastructure provisioning using Terraform modules and Ansible playbooks on AWS.</p>
-                            <div class="portfolio__tags">
-                                <span>Terraform</span>
-                                <span>AWS</span>
-                                <span>Ansible</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="portfolio__card">
-                        <div class="portfolio__img-wrapper">
-                            <img src="assets/img/portfolio3.jpg" alt="Project 3" class="portfolio__img">
-                            <div class="portfolio__overlay">
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="portfolio__link">
-                                    <i class="uil uil-github-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="portfolio__info">
-                            <h3 class="portfolio__title">ML Pipeline</h3>
-                            <p class="portfolio__description">End-to-end machine learning pipeline with automated training, evaluation, and deployment using PyTorch.</p>
-                            <div class="portfolio__tags">
-                                <span>Python</span>
-                                <span>PyTorch</span>
-                                <span>Docker</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="section__title reveal">Portfolio</h2>
+                <span class="section__subtitle reveal">selected_work</span>
+                <div class="portfolio__filters reveal" id="portfolio-filters"></div>
+                <div class="portfolio__grid" id="portfolio-grid"></div>
             </div>
         </section>
 
-        <!--==================== TESTIMONIAL ====================-->
+        <!--==================== TESTIMONIALS ====================-->
         <section class="testimonial section" id="testimonial">
             <div class="container">
-                <h2 class="section__title">Testimonials</h2>
-                <span class="section__subtitle">What People Say</span>
+                <h2 class="section__title reveal">Testimonials</h2>
+                <span class="section__subtitle reveal">what_people_say</span>
 
-                <div class="testimonial__grid">
-                    <div class="testimonial__card">
-                        <div class="testimonial__quote">
-                            <i class="uil uil-comment-alt-dots"></i>
-                        </div>
-                        <p class="testimonial__text">
-                            Made is an exceptional engineer who brings both technical depth and creative problem-solving
-                            to every project. His work on our backend systems significantly improved performance and reliability.
-                        </p>
-                        <div class="testimonial__author">
-                            <img src="assets/img/testimonial1.jpg" alt="Sara Smith" class="testimonial__author-img">
-                            <div>
-                                <h4 class="testimonial__author-name">Sara Smith</h4>
-                                <span class="testimonial__author-role">Engineering Manager</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial__card">
-                        <div class="testimonial__quote">
-                            <i class="uil uil-comment-alt-dots"></i>
-                        </div>
-                        <p class="testimonial__text">
-                            Working with Made was a great experience. He delivered high-quality code on time and
-                            communicated effectively throughout the project. Highly recommended for any backend work.
-                        </p>
-                        <div class="testimonial__author">
-                            <img src="assets/img/testimonial2.jpg" alt="Matt Robinson" class="testimonial__author-img">
-                            <div>
-                                <h4 class="testimonial__author-name">Matt Robinson</h4>
-                                <span class="testimonial__author-role">Tech Lead</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial__card">
-                        <div class="testimonial__quote">
-                            <i class="uil uil-comment-alt-dots"></i>
-                        </div>
-                        <p class="testimonial__text">
-                            Made's expertise in DevOps and infrastructure automation helped us reduce deployment time by 70%.
-                            His proactive approach and attention to detail make him a valuable team member.
-                        </p>
-                        <div class="testimonial__author">
-                            <img src="assets/img/testimonial3.jpg" alt="Raul Harris" class="testimonial__author-img">
-                            <div>
-                                <h4 class="testimonial__author-name">Raul Harris</h4>
-                                <span class="testimonial__author-role">Product Owner</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="testimonial__carousel reveal glass">
+                    <div class="testimonial__track" id="testimonial-track"></div>
+                </div>
+                <div class="testimonial__nav reveal">
+                    <button class="testimonial__arrow" id="t-prev" aria-label="Previous"><i class="uil uil-angle-left"></i></button>
+                    <div class="testimonial__dots" id="testimonial-dots"></div>
+                    <button class="testimonial__arrow" id="t-next" aria-label="Next"><i class="uil uil-angle-right"></i></button>
                 </div>
             </div>
         </section>
 
-        <!--==================== MINI GAME ====================-->
-        <section class="game section" id="game">
+        <!--==================== MINI GAMES ====================-->
+        <section class="game section" id="games">
             <div class="container">
-                <h2 class="section__title">Mini Game</h2>
-                <span class="section__subtitle">Take a break — Memory Card Game</span>
+                <h2 class="section__title reveal">Mini Games</h2>
+                <span class="section__subtitle reveal">take_a_break</span>
 
-                <div class="game__wrapper">
-                    <div class="game__info">
-                        <span class="game__moves">Moves: <strong id="game-moves">0</strong></span>
-                        <span class="game__matches">Matches: <strong id="game-matches">0</strong>/8</span>
-                        <button class="button game__reset" id="game-reset">
-                            <i class="uil uil-redo"></i> Reset
-                        </button>
+                <div class="games__tabs reveal">
+                    <button class="games__tab active" data-game="snake"><i class="uil uil-record-audio"></i> Snake</button>
+                    <button class="games__tab" data-game="memory"><i class="uil uil-layer-group"></i> Memory Match</button>
+                    <button class="games__tab" data-game="quiz"><i class="uil uil-question-circle"></i> Coding Quiz</button>
+                </div>
+
+                <!-- SNAKE -->
+                <div class="games__panel glass active" id="game-snake">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Score <strong id="snake-score">0</strong></span>
+                            <span class="games__stat">Best <strong id="snake-best">0</strong></span>
+                        </div>
+                        <button class="button button--ghost" id="snake-restart"><i class="uil uil-redo"></i> Restart</button>
                     </div>
-                    <div class="game__board" id="game-board"></div>
-                    <p class="game__message" id="game-message"></p>
+                    <canvas id="snake-canvas" width="400" height="400"></canvas>
+                    <p class="snake__hint">Use arrow keys / WASD — or the buttons on touch devices.</p>
+                    <div class="snake__dpad">
+                        <button class="up" data-dir="up" aria-label="Up"><i class="uil uil-angle-up"></i></button>
+                        <button class="left" data-dir="left" aria-label="Left"><i class="uil uil-angle-left"></i></button>
+                        <button class="down" data-dir="down" aria-label="Down"><i class="uil uil-angle-down"></i></button>
+                        <button class="right" data-dir="right" aria-label="Right"><i class="uil uil-angle-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- MEMORY -->
+                <div class="games__panel glass" id="game-memory">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Moves <strong id="memory-moves">0</strong></span>
+                            <span class="games__stat">Matches <strong id="memory-matches">0</strong>/8</span>
+                            <span class="games__stat">Time <strong id="memory-time">0s</strong></span>
+                            <span class="games__stat">Best <strong id="memory-best">—</strong></span>
+                        </div>
+                        <button class="button button--ghost" id="memory-restart"><i class="uil uil-redo"></i> Restart</button>
+                    </div>
+                    <div class="memory__board" id="memory-board"></div>
+                </div>
+
+                <!-- QUIZ -->
+                <div class="games__panel glass" id="game-quiz">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Question <strong id="quiz-num">1</strong>/<span id="quiz-total">7</span></span>
+                            <span class="games__stat">Score <strong id="quiz-score">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="quiz__progress"><span id="quiz-progress"></span></div>
+                    <div id="quiz-body"></div>
                 </div>
             </div>
         </section>
 
-        <!--==================== CONTACT ME ====================-->
+        <!--==================== CONTACT ====================-->
         <section class="contact section" id="contact">
             <div class="container">
-                <h2 class="section__title">Contact Me</h2>
-                <span class="section__subtitle">Get in Touch</span>
+                <h2 class="section__title reveal">Contact Me</h2>
+                <span class="section__subtitle reveal">let's_build_something</span>
 
                 <div class="contact__container">
-                    <div class="contact__info">
-                        <div class="contact__card">
-                            <i class="uil uil-envelope contact__icon"></i>
-                            <h3 class="contact__card-title">Email</h3>
-                            <span class="contact__card-data">mdrahano12@gmail.com</span>
-                        </div>
-
-                        <div class="contact__card">
-                            <i class="uil uil-map-marker contact__icon"></i>
-                            <h3 class="contact__card-title">Location</h3>
-                            <span class="contact__card-data">Surabaya, Indonesia</span>
-                        </div>
-
-                        <div class="contact__card">
-                            <i class="uil uil-linkedin-alt contact__icon"></i>
-                            <h3 class="contact__card-title">LinkedIn</h3>
-                            <a href="https://www.linkedin.com/in/maderahano/" target="_blank" class="contact__card-data">maderahano</a>
+                    <div class="reveal-l">
+                        <p class="contact__intro">
+                            Have a role, a project, or just want to say hi? My inbox is always open —
+                            I'll do my best to get back to you.
+                        </p>
+                        <div class="contact__info">
+                            <a class="contact__card glass" href="mailto:mdrahano12@gmail.com">
+                                <span class="contact__icon"><i class="uil uil-envelope"></i></span>
+                                <span><span class="contact__card-title">Email</span><br><span class="contact__card-data">mdrahano12@gmail.com</span></span>
+                            </a>
+                            <div class="contact__card glass">
+                                <span class="contact__icon"><i class="uil uil-map-marker"></i></span>
+                                <span><span class="contact__card-title">Location</span><br><span class="contact__card-data">Surabaya, Indonesia</span></span>
+                            </div>
+                            <a class="contact__card glass" href="https://github.com/maderahano" target="_blank" rel="noopener">
+                                <span class="contact__icon"><i class="uil uil-github-alt"></i></span>
+                                <span><span class="contact__card-title">GitHub</span><br><span class="contact__card-data">@maderahano</span></span>
+                            </a>
+                            <a class="contact__card glass" href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener">
+                                <span class="contact__icon"><i class="uil uil-linkedin-alt"></i></span>
+                                <span><span class="contact__card-title">LinkedIn</span><br><span class="contact__card-data">in/maderahano</span></span>
+                            </a>
                         </div>
                     </div>
 
-                    <form action="" class="contact__form">
-                        <div class="contact__form-group">
-                            <input type="text" placeholder="Your Name" class="contact__input" required>
+                    <!-- Static contact form.
+                         Default: opens the visitor's email client via mailto (no backend needed).
+                         To use Formspree instead: set data-formspree="https://formspree.io/f/XXXX" on the form. -->
+                    <form class="contact__form glass reveal-r" id="contact-form" data-formspree="">
+                        <div class="contact__form-row">
+                            <div class="contact__field">
+                                <input type="text" name="name" placeholder="Your Name" class="contact__input" required>
+                            </div>
+                            <div class="contact__field">
+                                <input type="email" name="email" placeholder="Your Email" class="contact__input" required>
+                            </div>
                         </div>
-                        <div class="contact__form-group">
-                            <input type="email" placeholder="Your Email" class="contact__input" required>
+                        <div class="contact__field">
+                            <input type="text" name="subject" placeholder="Subject" class="contact__input">
                         </div>
-                        <div class="contact__form-group">
-                            <input type="text" placeholder="Subject" class="contact__input">
+                        <div class="contact__field">
+                            <textarea name="message" placeholder="Your Message" rows="6" class="contact__input" required></textarea>
                         </div>
-                        <div class="contact__form-group">
-                            <textarea placeholder="Your Message" rows="6" class="contact__input" required></textarea>
-                        </div>
-                        <button type="submit" class="button">
-                            Send Message <i class="uil uil-message"></i>
-                        </button>
+                        <button type="submit" class="button">Send Message <i class="uil uil-message"></i></button>
                     </form>
+                </div>
+
+                <!--==================== GITHUB-STYLE HEATMAP (mock data) ====================-->
+                <div class="heatmap glass reveal" id="heatmap">
+                    <div class="heatmap__head">
+                        <h4><i class="uil uil-chart"></i> Coding Activity</h4>
+                        <span class="heatmap__total" id="heatmap-total"></span>
+                    </div>
+                    <div class="heatmap__grid" id="heatmap-grid"></div>
+                    <div class="heatmap__legend">
+                        Less
+                        <i style="background:var(--surface-2)"></i>
+                        <i style="background:rgba(34,197,94,0.3)"></i>
+                        <i style="background:rgba(34,197,94,0.5)"></i>
+                        <i style="background:rgba(34,197,94,0.75)"></i>
+                        <i style="background:var(--green)"></i>
+                        More
+                    </div>
                 </div>
             </div>
         </section>
@@ -521,33 +385,59 @@
         <div class="container">
             <div class="footer__content">
                 <div>
-                    <h3 class="footer__title">Made Rahano</h3>
-                    <span class="footer__subtitle">Software Engineer</span>
+                    <h3 class="footer__title">&lt;<span>Made</span>Rahano/&gt;</h3>
+                    <span class="footer__subtitle">Software Engineer · Backend &amp; Infrastructure</span>
                 </div>
-
                 <ul class="footer__links">
                     <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#games">Mini Games</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-
                 <div class="footer__socials">
-                    <a href="https://www.linkedin.com/in/maderahano/" target="_blank"><i class="uil uil-linkedin-alt"></i></a>
-                    <a href="https://github.com/maderahano" target="_blank"><i class="uil uil-github-alt"></i></a>
-                    <a href="https://www.instagram.com/md.rahano/" target="_blank"><i class="uil uil-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="uil uil-linkedin-alt"></i></a>
+                    <a href="https://github.com/maderahano" target="_blank" rel="noopener" aria-label="GitHub"><i class="uil uil-github-alt"></i></a>
+                    <a href="https://www.instagram.com/md.rahano/" target="_blank" rel="noopener" aria-label="Instagram"><i class="uil uil-instagram"></i></a>
                 </div>
             </div>
-            <p class="footer__copy">&copy; 2026 Made Rahano. All rights reserved.</p>
+            <p class="footer__copy">
+                &copy; <span id="year"></span> Made Rahano. Built with <i class="uil uil-heart"></i> &amp; vanilla JS. All rights reserved.
+            </p>
         </div>
     </footer>
 
-    <!--==================== SCROLL TOP ====================-->
-    <a href="#" class="scrollup" id="scroll-up">
-        <i class="uil uil-arrow-up scrollup__icon"></i>
-    </a>
+    <!--==================== PORTFOLIO MODAL ====================-->
+    <div class="modal" id="project-modal">
+        <div class="modal__content glass">
+            <span class="modal__close" id="modal-close" aria-label="Close"><i class="uil uil-times"></i></span>
+            <img src="" alt="" class="modal__img" id="modal-img">
+            <div class="modal__body">
+                <h3 class="modal__title" id="modal-title"></h3>
+                <p class="modal__desc" id="modal-desc"></p>
+                <div class="modal__tags" id="modal-tags"></div>
+                <div class="modal__actions" id="modal-actions"></div>
+            </div>
+        </div>
+    </div>
 
+    <!--==================== ACHIEVEMENT POPUP + TOASTS ====================-->
+    <div class="achv" id="achv">
+        <span class="achv__icon"><i class="uil uil-trophy"></i></span>
+        <div>
+            <div class="achv__label">ACHIEVEMENT UNLOCKED</div>
+            <div class="achv__title" id="achv-title"></div>
+            <div class="achv__sub" id="achv-sub"></div>
+        </div>
+    </div>
+    <div id="toast-wrap"></div>
 
-    <!--==================== MAIN JS ====================-->
+    <!--==================== BACK TO TOP ====================-->
+    <a href="#home" class="scrollup" id="scroll-up" aria-label="Back to top"><i class="uil uil-arrow-up scrollup__icon"></i></a>
+
+    <!--==================== SCRIPTS ====================-->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/games.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
