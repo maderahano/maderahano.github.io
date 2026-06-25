@@ -46,7 +46,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Made Rahano Satryani Widhi",
-      "alternateName": "Made Rahano",
+      "alternateName": "Anok",
       "jobTitle": "Software Engineer",
       "url": "https://maderahano.github.io/",
       "sameAs": [
@@ -255,7 +255,7 @@
                 <div class="games__tabs reveal">
                     <button class="games__tab active" data-game="snake"><i class="uil uil-record-audio"></i> Snake</button>
                     <button class="games__tab" data-game="memory"><i class="uil uil-layer-group"></i> Memory Match</button>
-                    <button class="games__tab" data-game="quiz"><i class="uil uil-question-circle"></i> Coding Quiz</button>
+                    <button class="games__tab" data-game="dino"><i class="uil uil-game-structure"></i> Cube Run</button>
                 </div>
 
                 <!-- SNAKE -->
@@ -291,16 +291,17 @@
                     <div class="memory__board" id="memory-board"></div>
                 </div>
 
-                <!-- QUIZ -->
-                <div class="games__panel glass" id="game-quiz">
+                <!-- CUBE RUN -->
+                <div class="games__panel glass" id="game-dino">
                     <div class="games__head">
                         <div class="games__stats">
-                            <span class="games__stat">Question <strong id="quiz-num">1</strong>/<span id="quiz-total">7</span></span>
-                            <span class="games__stat">Score <strong id="quiz-score">0</strong></span>
+                            <span class="games__stat">Score <strong id="dino-score">0</strong></span>
+                            <span class="games__stat">Best <strong id="dino-best">0</strong></span>
                         </div>
+                        <button class="button button--ghost" id="dino-restart"><i class="uil uil-redo"></i> Restart</button>
                     </div>
-                    <div class="quiz__progress"><span id="quiz-progress"></span></div>
-                    <div id="quiz-body"></div>
+                    <canvas id="dino-canvas" width="600" height="200"></canvas>
+                    <p class="dino__hint">Press Space / ↑ to jump · ↓ to duck — or tap the canvas on touch devices.</p>
                 </div>
             </div>
         </section>
@@ -318,13 +319,13 @@
                             I'll do my best to get back to you.
                         </p>
                         <div class="contact__info">
-                            <a class="contact__card glass" href="mailto:mdrahano12@gmail.com">
+                            <a class="contact__card glass" href="mailto:maderahano@gmail.com">
                                 <span class="contact__icon"><i class="uil uil-envelope"></i></span>
-                                <span><span class="contact__card-title">Email</span><br><span class="contact__card-data">mdrahano12@gmail.com</span></span>
+                                <span><span class="contact__card-title">Email</span><br><span class="contact__card-data">maderahano@gmail.com</span></span>
                             </a>
                             <div class="contact__card glass">
                                 <span class="contact__icon"><i class="uil uil-map-marker"></i></span>
-                                <span><span class="contact__card-title">Location</span><br><span class="contact__card-data">Surabaya, Indonesia</span></span>
+                                <span><span class="contact__card-title">Location</span><br><span class="contact__card-data">Jakarta, Indonesia</span></span>
                             </div>
                             <a class="contact__card glass" href="https://github.com/maderahano" target="_blank" rel="noopener">
                                 <span class="contact__icon"><i class="uil uil-github-alt"></i></span>
@@ -340,7 +341,7 @@
                     <!-- Static contact form.
                          Default: opens the visitor's email client via mailto (no backend needed).
                          To use Formspree instead: set data-formspree="https://formspree.io/f/XXXX" on the form. -->
-                    <form class="contact__form glass reveal-r" id="contact-form" data-formspree="">
+                    <form class="contact__form glass reveal-r" id="contact-form" data-formspree="https://formspree.io/f/xzdlepqd">
                         <div class="contact__form-row">
                             <div class="contact__field">
                                 <input type="text" name="name" placeholder="Your Name" class="contact__input" required>
@@ -360,7 +361,7 @@
                 </div>
 
                 <!--==================== GITHUB-STYLE HEATMAP (mock data) ====================-->
-                <div class="heatmap glass reveal" id="heatmap">
+                <!-- <div class="heatmap glass reveal" id="heatmap">
                     <div class="heatmap__head">
                         <h4><i class="uil uil-chart"></i> Coding Activity</h4>
                         <span class="heatmap__total" id="heatmap-total"></span>
@@ -375,7 +376,7 @@
                         <i style="background:var(--green)"></i>
                         More
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </main>

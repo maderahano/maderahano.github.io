@@ -254,9 +254,7 @@
           <div class="skill">
             <div class="skill__top">
               <span class="skill__name"><i class="${s.icon} colored"></i> ${s.name}</span>
-              <span class="skill__pct">${s.level}%</span>
             </div>
-            <div class="skill__bar"><span class="skill__fill" data-level="${s.level}"></span></div>
           </div>`).join('')}
       </div>`).join('');
     observeReveals(box);
@@ -483,7 +481,7 @@
     achievement(title, sub);
   }
   // game-driven achievements
-  window.addEventListener('quiz:perfect', () => unlock('quiz-ace', 'Quiz Ace 🧠', 'Perfect score on the coding quiz!'));
+  window.addEventListener('dino:milestone', () => unlock('dino-runner', 'Cube Runner 🦖', 'Scored 100+ in Dino Run!'));
   window.addEventListener('snake:over', (e) => { if (e.detail.score >= 100) unlock('snake-100', 'Snake Charmer 🐍', 'Scored 100+ in Snake!'); });
 
   /*==================== EASTER EGGS ====================*/

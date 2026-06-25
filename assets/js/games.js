@@ -1,5 +1,5 @@
 /*==================================================================
-  Mini Games — Snake · Memory Match · Coding Quiz
+  Mini Games — Snake · Memory Match · Dinosaur Run
   Pure vanilla JS + Canvas. High scores persisted in LocalStorage.
 ==================================================================*/
 (function () {
@@ -217,98 +217,242 @@
     return { init, stop };
   })();
 
-  /*======================== CODING QUIZ ========================*/
-  const Quiz = (() => {
-    const body = $('#quiz-body');
-    if (!body) return { init() {} };
-    let idx, score, qs;
+  /*======================== CUBE RUN ========================*/
+  const Dino = (() => {
+    const canvas = $('#dino-canvas');
+    if (!canvas) return { init() {} };
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const BASE = H - 30;              // y of the ground baseline (where feet rest)
+    const STAND_H = 30, DUCK_H = 18, DINO_W = 24;
+    const GRAVITY = 0.7;
+    const JUMP_V = -12.5;
 
-    function start() {
-      idx = 0; score = 0;
-      qs = D.QUIZ;
-      $('#quiz-total').textContent = qs.length;
-      $('#quiz-score').textContent = '0';
-      render();
+    let dino, obstacles, score, best, speed, spawnIn, dead, started;
+    let loopId, milestoneHit;
+
+    function reset() {
+      dino = { x: 48, y: BASE - STAND_H, vy: 0, ducking: false, onGround: true };
+      obstacles = [];
+      score = 0;
+      speed = 5;
+      spawnIn = 60;
+      dead = false;
+      started = false;
+      milestoneHit = false;
+      best = ls.get('dino-best', 0);
+      $('#dino-score').textContent = '0';
+      $('#dino-best').textContent = best;
     }
 
-    function render() {
-      const item = qs[idx];
-      $('#quiz-num').textContent = idx + 1;
-      $('#quiz-progress').style.width = (idx / qs.length) * 100 + '%';
-      body.innerHTML = `
-        <p class="quiz__question">${item.q}</p>
-        <div class="quiz__options">
-          ${item.options.map((o, i) => `<button class="quiz__option" data-i="${i}">${o}</button>`).join('')}
-        </div>`;
-      body.querySelectorAll('.quiz__option').forEach((btn) => btn.addEventListener('click', () => choose(btn, item)));
+    function jump() {
+      if (dead) return;
+      started = true;
+      if (dino.onGround) { dino.vy = JUMP_V; dino.onGround = false; }
     }
 
-    function choose(btn, item) {
-      const chosen = +btn.dataset.i;
-      const opts = body.querySelectorAll('.quiz__option');
-      opts.forEach((o, i) => {
-        o.disabled = true;
-        if (i === item.answer) o.classList.add('correct');
-        else if (i === chosen) o.classList.add('wrong');
+    function duck(on) {
+      if (dead) return;
+      dino.ducking = on && dino.onGround;
+    }
+
+    function spawn() {
+      // Two obstacle flavours: a ground cactus and a higher "bird" that you duck under.
+      const bird = Math.random() < 0.25 && Math.floor(score / 5) > 30;
+      if (bird) {
+        obstacles.push({ x: W + 10, y: BASE - 46, w: 30, h: 18, bird: true });
+      } else {
+        const h = 24 + Math.floor(Math.random() * 22);
+        const w = 12 + Math.floor(Math.random() * 14);
+        obstacles.push({ x: W + 10, y: BASE - h, w, h, bird: false });
+      }
+    }
+
+    function hit(a, b) {
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+
+    function dinoBox() {
+      const h = dino.ducking ? DUCK_H : STAND_H;
+      return { x: dino.x, y: dino.ducking ? BASE - DUCK_H : dino.y, w: DINO_W, h };
+    }
+
+    function update() {
+      if (!started || dead) return;
+
+      // Dino physics — dino.y is the top edge; floor depends on standing/ducking height.
+      dino.vy += GRAVITY;
+      dino.y += dino.vy;
+      const floor = BASE - (dino.ducking ? DUCK_H : STAND_H);
+      if (dino.y >= floor) { dino.y = floor; dino.vy = 0; dino.onGround = true; }
+      else { dino.onGround = false; }
+      const box = dinoBox();
+
+      // Score + difficulty
+      score++;
+      $('#dino-score').textContent = Math.floor(score / 5);
+      if (score % 250 === 0) speed += 0.6;
+      if (!milestoneHit && Math.floor(score / 5) >= 100) {
+        milestoneHit = true;
+        window.dispatchEvent(new CustomEvent('dino:milestone'));
+      }
+
+      // Obstacles
+      if (--spawnIn <= 0) {
+        spawn();
+        spawnIn = Math.max(45, 90 - Math.floor(speed * 3)) + Math.floor(Math.random() * 40);
+      }
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const o = obstacles[i];
+        o.x -= speed;
+        if (o.x + o.w < 0) { obstacles.splice(i, 1); continue; }
+        if (hit(box, o)) return gameOver();
+      }
+    }
+
+    function gameOver() {
+      dead = true;
+      const s = Math.floor(score / 5);
+      if (s > best) { best = s; ls.set('dino-best', best); $('#dino-best').textContent = best; }
+      window.dispatchEvent(new CustomEvent('dino:over', { detail: { score: s } }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = css('--bg-2') || '#0b1120';
+      ctx.fillRect(0, 0, W, H);
+
+      // ground
+      ctx.strokeStyle = css('--text-soft') || '#94A3B8';
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(0, BASE + 1);
+      ctx.lineTo(W, BASE + 1);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // dino
+      const green = css('--green-3') || '#4ADE80';
+      ctx.fillStyle = green;
+      const b = dinoBox();
+      roundRect(b.x, b.y, b.w, b.h, 5);
+      ctx.fill();
+      // little eye
+      ctx.fillStyle = css('--bg-2') || '#0b1120';
+      ctx.fillRect(b.x + b.w - 7, b.y + 5, 3, 3);
+
+      // obstacles
+      obstacles.forEach((o) => {
+        ctx.fillStyle = o.bird ? (css('--green-2') || '#22C55E') : '#ef4444';
+        roundRect(o.x, o.y, o.w, o.h, 4);
+        ctx.fill();
       });
-      if (chosen === item.answer) { score++; $('#quiz-score').textContent = score; }
-      setTimeout(() => { idx++; idx < qs.length ? render() : finish(); }, 900);
+
+      // overlays
+      ctx.textAlign = 'center';
+      if (!started) {
+        ctx.fillStyle = css('--text-soft') || '#94A3B8';
+        ctx.font = '500 15px Inter, sans-serif';
+        ctx.fillText('Press Space / ↑ or tap to start', W / 2, H / 2);
+      } else if (dead) {
+        ctx.fillStyle = 'rgba(15,23,42,0.78)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = green;
+        ctx.font = '700 26px Inter, sans-serif';
+        ctx.fillText('Game Over', W / 2, H / 2 - 6);
+        ctx.fillStyle = css('--text-soft') || '#94A3B8';
+        ctx.font = '500 14px Inter, sans-serif';
+        ctx.fillText('Score ' + Math.floor(score / 5) + ' · Press Restart / tap', W / 2, H / 2 + 18);
+      }
     }
 
-    function finish() {
-      $('#quiz-progress').style.width = '100%';
-      $('#quiz-num').textContent = qs.length;
-      const pct = Math.round((score / qs.length) * 100);
-      const msg = pct === 100 ? 'Flawless. Are you hiring? 😎'
-        : pct >= 70 ? 'Strong work — solid fundamentals!'
-        : pct >= 40 ? 'Not bad — keep grinding those docs.'
-        : 'Everyone starts somewhere. Run it back!';
-      body.innerHTML = `
-        <div class="quiz__result">
-          <div class="quiz__result-score">${score}/${qs.length}</div>
-          <p class="quiz__result-msg">${msg}</p>
-          <button class="button" id="quiz-restart"><i class="uil uil-redo"></i> Play Again</button>
-        </div>`;
-      $('#quiz-restart').addEventListener('click', start);
-      if (pct === 100) window.dispatchEvent(new CustomEvent('quiz:perfect'));
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
     }
 
-    function init() { start(); }
-    return { init };
+    let running = false;
+    function frame() {
+      loopId = requestAnimationFrame(frame);
+      if (running) update();
+      draw();
+    }
+
+    function start() { running = true; }
+    function stop() { running = false; }
+
+    function onKey(e) {
+      if (!running) return;
+      if (e.code === 'Space' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        if (dead) { reset(); } else { jump(); }
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        duck(true);
+      }
+    }
+    function onKeyUp(e) {
+      if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') duck(false);
+    }
+
+    function init() {
+      reset();
+      draw();
+      cancelAnimationFrame(loopId);
+      loopId = requestAnimationFrame(frame);
+      document.addEventListener('keydown', onKey);
+      document.addEventListener('keyup', onKeyUp);
+      canvas.addEventListener('pointerdown', () => { if (dead) reset(); else jump(); });
+      $('#dino-restart').addEventListener('click', reset);
+    }
+
+    return { init, start, stop };
   })();
 
   /*======================== TAB SWITCHING ========================*/
   function initTabs() {
     const tabs = document.querySelectorAll('.games__tab');
-    const panels = { snake: $('#game-snake'), memory: $('#game-memory'), quiz: $('#game-quiz') };
-    let inited = { snake: false, memory: false, quiz: false };
+    const panels = { snake: $('#game-snake'), memory: $('#game-memory'), dino: $('#game-dino') };
+    const mods = { snake: Snake, memory: Memory, dino: Dino };
+    let inited = { snake: false, memory: false, dino: false };
+    let current = 'snake';
+
+    function ensure(name) { if (!inited[name]) { inited[name] = true; mods[name].init(); } }
 
     function activate(name) {
+      current = name;
       tabs.forEach((t) => t.classList.toggle('active', t.dataset.game === name));
       Object.entries(panels).forEach(([k, p]) => p && p.classList.toggle('active', k === name));
-      Snake.stop();
+      Snake.stop(); Dino.stop();
+      ensure(name);
       if (name === 'snake') Snake.start();
-      if (!inited[name]) { inited[name] = true; ({ snake: Snake, memory: Memory, quiz: Quiz })[name].init(); }
+      if (name === 'dino') Dino.start();
     }
 
     tabs.forEach((t) => t.addEventListener('click', () => activate(t.dataset.game)));
 
-    // Lazy-start: only initialise the visible Snake game when the section scrolls in.
+    // Lazy-start: only run the active canvas game while the section is on-screen.
     const section = $('#games');
     if (section && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            if (!inited.snake) { inited.snake = true; Snake.init(); }
-            Snake.start();
+            ensure('snake');
+            if (current === 'snake') Snake.start();
+            else if (current === 'dino') Dino.start();
           } else {
-            Snake.stop();
+            Snake.stop(); Dino.stop();
           }
         });
       }, { threshold: 0.25 });
       io.observe(section);
     } else {
-      inited.snake = true; Snake.init(); Snake.start();
+      ensure('snake'); Snake.start();
     }
   }
 
