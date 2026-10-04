@@ -1,0 +1,36 @@
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+.card {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  transition: border-color var(--dur), transform var(--dur) var(--ease-out);
+}
+.card:hover {
+  border-color: var(--accent-ring);
+  transform: translateY(-3px);
+}
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+.title {
+  font-size: var(--fs-md);
+}
+.text {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

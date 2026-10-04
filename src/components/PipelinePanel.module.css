@@ -1,0 +1,144 @@
+.panel {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.dots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.dots i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--surface-3);
+}
+.barTitle {
+  flex: 1;
+}
+.barStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent-text);
+}
+.statusDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-ring);
+  animation: ping 2.2s ease-out infinite;
+}
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 var(--accent-ring);
+  }
+  70% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.steps {
+  display: grid;
+  padding: 0.9rem 1rem 0.5rem;
+  list-style: none;
+  margin: 0;
+}
+.step {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  gap: 0.85rem;
+  align-items: start;
+  min-height: 2.9rem;
+}
+.rail {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  height: 100%;
+}
+.node {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #06230f;
+  z-index: 1;
+}
+.railLine {
+  position: absolute;
+  top: 1.6rem;
+  bottom: -0.1rem;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.55;
+  transform-origin: 50% 0;
+}
+.stepText {
+  display: grid;
+  line-height: 1.25;
+  padding-top: 0.05rem;
+}
+.stepLabel {
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+.stepDetail {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.check {
+  color: var(--accent-text);
+  font-size: var(--fs-sm);
+  padding-top: 0.15rem;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem 0.95rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+}
+.prompt {
+  color: var(--accent-text);
+}
+.cmd {
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.cursor {
+  width: 0.5rem;
+  height: 0.95em;
+  background: var(--text-2);
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.ok {
+  margin-left: auto;
+  color: var(--muted);
+}
