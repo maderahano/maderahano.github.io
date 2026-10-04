@@ -1,69 +1,76 @@
-# Made Rahano — Backend Infrastructure Engineer · Portfolio
+# Made Rahano — Software Engineer Portfolio
 
-A fully **static** personal portfolio. No backend, no build step —
-open `index.html` or push to GitHub Pages and it's live.
+A modern, fully **static** personal portfolio website. No backend, no build step —
+just open `index.html` or push to GitHub Pages and it's live.
 
 🌐 **Live:** https://maderahano.github.io
 
-## What's on the page
+## Features
 
-- **Hero** — who I am, what I build, and a "system card" showing my real stack and delivery pipeline (code → CI/CD → IaC → cloud)
-- **About** — short intro, primary technologies, and a few facts
-- **Experience** — scannable timeline: period, company, role, impact bullets, tech tags
-- **Projects** — featured case studies (problem → approach → outcome) with an architecture preview, plus a compact grid of smaller projects
-- **Skills** — grouped by where they sit in the stack (backend, DevOps & cloud, databases, tooling)
-- **Education**, **Testimonials**, **Contact** (form + direct links)
-- 🎮 **Mini games** — Snake, Memory Match and Cube Run in plain canvas JS, high scores in `localStorage`
-- 🥚 Five hidden easter-egg icons + the Konami code, with achievement popups
+- 🌗 **Dark / Light theme** toggle (dark by default), saved to `localStorage`
+- ✨ Green glassmorphism design, animated gradient background & interactive particle network
+- ⌨️ Hero typing effect, animated counters, scroll-reveal animations
+- 🧭 Sticky nav with active-section highlighting, smooth scroll & mobile hamburger menu
+- 📊 Skills with animated proficiency bars and colored tech logos (Devicon)
+- 🗓️ Animated Experience & Education timelines
+- 🖼️ Portfolio gallery with category filters + modal previews
+- 💬 Auto-playing testimonials carousel (arrows, dots, swipe)
+- 🎮 **Mini games:** Snake, Memory Match, and a Coding Quiz (high scores in `localStorage`)
+- 🥚 Hidden easter-egg icons + Konami code with achievement popups
+- 📈 GitHub-style contribution heatmap (mock data)
+- 📬 Contact form (mailto by default, Formspree-ready)
+- 🧩 Custom cursor, scroll progress bar, loading screen, back-to-top
+- 🔎 SEO meta tags, Open Graph, JSON-LD structured data, SVG favicon
+- 📱 Mobile-first responsive, respects `prefers-reduced-motion`
 
-## Design & engineering notes
-
-- 🌗 Dark / light theme (dark by default), saved to `localStorage`, applied before first paint
-- Design system in CSS custom properties: colour, type scale, spacing, radius, motion
-- Inter for UI, JetBrains Mono for metadata — no icon sprites beyond Unicons (UI) and Devicon (tech logos) from CDN
-- Scroll-reveal, hover elevation and a subtle pipeline animation; everything respects `prefers-reduced-motion`
-- Semantic HTML, labelled form fields, keyboard-operable tabs and menu, visible focus states, skip link
-- SEO meta tags, Open Graph, JSON-LD `Person` structured data, SVG favicon
-
-## Tech stack
+## Tech Stack
 
 Plain **HTML5 · CSS3 · vanilla JavaScript** — zero dependencies, zero build.
+Icons via [Unicons](https://iconscout.com/unicons) (UI) and [Devicon](https://devicon.dev) (tech logos), loaded from CDN.
 
-## Project structure
+## Project Structure
 
 ```
-index.html                 # Page structure + SEO/OG meta
+index.html                 # All sections + SEO/OG meta
 assets/
-  css/styles.css           # Design tokens, components, responsive rules
+  css/styles.css           # Theme tokens, glassmorphism, animations, responsive
   js/
-    data.js                # ← Edit your content here (hero, about, skills, experience, projects, testimonials)
-    main.js                # Theme, nav, rendering, reveal animations, contact form, easter eggs
-    games.js               # Snake · Memory Match · Cube Run
-  img/                     # Photos, favicon
-  pdf/Made-Rahano-CV.pdf   # Résumé (linked from the hero and contact section)
+    data.js                # ← Edit your content here (skills, experience, projects, etc.)
+    main.js                # Theme, nav, rendering, animations, easter eggs
+    games.js               # Snake · Memory Match · Coding Quiz
+  img/                      # Photos, project images, favicon
+  pdf/Made-Rahano-CV.pdf    # Resume (linked from the hero "Download Resume" button)
 ```
 
-## Editing content
+## Editing Content
 
-Everything is data-driven. Open [`assets/js/data.js`](assets/js/data.js) to update the hero
-(role, headline, stack facts, pipeline), about text and stats, skills, experience, education,
-projects (featured case studies take `context` / `approach` / `outcome` and a small `diagram`),
-and testimonials. No HTML changes needed.
+Almost everything is data-driven. Open [`assets/js/data.js`](assets/js/data.js) to update:
+your roles (typing effect), about cards, **skills & proficiency levels**, work experience,
+education, portfolio projects (with category, GitHub/demo links), testimonials, and quiz questions.
+No HTML changes needed.
 
-## Contact form
+## Contact Form
 
-With `data-formspree` set on the form in `index.html`, submissions are POSTed to
-[Formspree](https://formspree.io). Remove the attribute to fall back to opening the visitor's
-email client via `mailto:` (works on any static host, no backend).
+The form opens the visitor's email client via `mailto:` (works on any static host, no backend).
+To collect submissions instead, create a [Formspree](https://formspree.io) form and set its
+endpoint on the form in `index.html`:
+
+```html
+<form class="contact__form ..." id="contact-form" data-formspree="https://formspree.io/f/XXXXXXX">
+```
 
 ## Deploy
 
 Already a GitHub Pages user site — commit to `master` and it publishes automatically.
-Also works as-is on Netlify or Vercel (publish directory = repo root, no build command).
+Also works as-is on Netlify or Vercel (set the publish/output directory to the repo root, no build command).
 
-## Run locally
+## Run Locally
 
 ```bash
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
+
+---
+
+> _Tip: there are 5 hidden easter-egg icons scattered across the site. Can you find them all? (And try the Konami code.)_

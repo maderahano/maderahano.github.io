@@ -1,5 +1,5 @@
 /*==================================================================
-  main.js — theme, nav, rendering, reveal animations & interactions.
+  main.js — theme, nav, animations, rendering & interactions.
   Depends on data.js (window.PORTFOLIO_DATA).
 ==================================================================*/
 (function () {
@@ -12,32 +12,33 @@
     get: (k, f) => { try { const v = localStorage.getItem(k); return v === null ? f : JSON.parse(v); } catch { return f; } },
     set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
-  const icon = (name) => `<i class="uil ${name}" aria-hidden="true"></i>`;
-  /* Individual Devicon SVGs (a few KB each) instead of the 1.2 MB icon font */
-  const LOGO_BASE = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/';
-  const tags = (list, cls = '') => `<ul class="tag-list" aria-label="Technologies">${list.map((t) => `<li class="tag ${cls}">${t}</li>`).join('')}</ul>`;
-  const externalAttrs = (href) => (href && !href.startsWith('#') ? 'target="_blank" rel="noopener"' : '');
+
+  /*==================== LOADER ====================*/
+  window.addEventListener('load', () => {
+    const loader = $('#loader');
+    if (loader) setTimeout(() => loader.classList.add('hide'), 500);
+  });
 
   /*==================== THEME ====================*/
   (function theme() {
     const btn = $('#theme-button');
     const root = document.documentElement;
-    const meta = $('meta[name="theme-color"]');
-    const apply = (t) => {
-      const light = t === 'light';
-      root.classList.toggle('light', light);
-      if (btn) {
-        btn.innerHTML = icon(light ? 'uil-sun' : 'uil-moon');
-        btn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
-        btn.setAttribute('aria-pressed', String(light));
-      }
-      if (meta) meta.setAttribute('content', light ? '#F6F8FB' : '#0B1120');
-    };
-    apply(ls.get('theme', 'dark'));
-    btn && btn.addEventListener('click', () => {
+    const saved = ls.get('theme', 'dark');
+    apply(saved);
+    function apply(t) {
+      root.classList.toggle('light', t === 'light');
+      if (btn) btn.className = 'uil change-theme ' + (t === 'light' ? 'uil-sun' : 'uil-moon');
+      const meta = $('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', t === 'light' ? '#F8FAFC' : '#0F172A');
+    }
+    function toggle() {
       const next = root.classList.contains('light') ? 'dark' : 'light';
       apply(next); ls.set('theme', next);
-    });
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    }
   })();
 
   /*==================== NAV ====================*/
@@ -47,31 +48,17 @@
     const close = $('#nav-close');
     const backdrop = $('#nav-backdrop');
     const header = $('#header');
-    if (!menu || !toggle) return;
 
-    const open = () => {
-      menu.classList.add('show-menu'); backdrop.classList.add('show');
-      document.body.classList.add('no-scroll');
-      toggle.setAttribute('aria-expanded', 'true');
-      close && close.focus();
-    };
-    const hide = (refocus) => {
-      if (!menu.classList.contains('show-menu')) return;
-      menu.classList.remove('show-menu'); backdrop.classList.remove('show');
-      document.body.classList.remove('no-scroll');
-      toggle.setAttribute('aria-expanded', 'false');
-      if (refocus) toggle.focus();
-    };
+    const open = () => { menu.classList.add('show-menu'); backdrop.classList.add('show'); };
+    const hide = () => { menu.classList.remove('show-menu'); backdrop.classList.remove('show'); };
 
-    toggle.addEventListener('click', open);
-    close && close.addEventListener('click', () => hide(true));
-    backdrop.addEventListener('click', () => hide(false));
-    $$('.nav__link, .nav__menu-footer a', menu).forEach((l) => l.addEventListener('click', () => hide(false)));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(true); });
-    window.matchMedia('(min-width: 981px)').addEventListener('change', (e) => { if (e.matches) hide(false); });
+    toggle && toggle.addEventListener('click', open);
+    close && close.addEventListener('click', hide);
+    backdrop && backdrop.addEventListener('click', hide);
+    $$('.nav__link').forEach((l) => l.addEventListener('click', hide));
 
-    // header hairline on scroll
-    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    // header elevation on scroll
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -83,12 +70,12 @@
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          links.forEach((l) => { l.classList.remove('active-link'); l.removeAttribute('aria-current'); });
-          const link = map[e.target.id];
-          if (link) { link.classList.add('active-link'); link.setAttribute('aria-current', 'true'); }
+          if (e.isIntersecting) {
+            links.forEach((l) => l.classList.remove('active-link'));
+            map[e.target.id] && map[e.target.id].classList.add('active-link');
+          }
         });
-      }, { rootMargin: '-40% 0px -55% 0px' });
+      }, { rootMargin: '-45% 0px -50% 0px' });
       sections.forEach((s) => io.observe(s));
     }
   })();
@@ -97,234 +84,50 @@
   (function scrollUi() {
     const bar = $('#scroll-progress');
     const up = $('#scroll-up');
-    let ticking = false;
-    const update = () => {
+    const onScroll = () => {
       const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      const p = max > 0 ? h.scrollTop / max : 0;
-      if (bar) bar.style.transform = `scaleX(${p})`;
-      if (up) up.classList.toggle('show', h.scrollTop > 600);
-      ticking = false;
+      const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+      if (bar) bar.style.width = (scrolled * 100) + '%';
+      if (up) up.classList.toggle('show', h.scrollTop > 500);
     };
-    update();
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /*==================== TYPING EFFECT ====================*/
+  (function typing() {
+    const el = $('#typed');
+    if (!el || !D.TYPED_ROLES) return;
+    const roles = D.TYPED_ROLES;
+    if (reduceMotion) { el.textContent = roles[0]; return; }
+    let r = 0, i = 0, deleting = false;
+    function loop() {
+      const word = roles[r];
+      el.textContent = word.slice(0, i);
+      if (!deleting && i < word.length) { i++; setTimeout(loop, 90); }
+      else if (!deleting && i === word.length) { deleting = true; setTimeout(loop, 1600); }
+      else if (deleting && i > 0) { i--; setTimeout(loop, 45); }
+      else { deleting = false; r = (r + 1) % roles.length; setTimeout(loop, 350); }
+    }
+    loop();
   })();
 
   /*==================== SCROLL REVEAL ====================*/
-  const revealIO = ('IntersectionObserver' in window && !reduceMotion)
-    ? new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' })
-    : null;
+  const revealIO = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, obs) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        // animate skill bars when revealed
+        $$('.skill__fill', e.target).forEach((f) => { f.style.width = (f.dataset.level || 0) + '%'; });
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 }) : null;
+
   function observeReveals(scope = document) {
-    const els = $$('.reveal', scope);
-    if (!revealIO) { els.forEach((el) => el.classList.add('in')); return; }
-    els.forEach((el) => revealIO.observe(el));
+    if (!revealIO) { $$('.reveal,.reveal-l,.reveal-r', scope).forEach((el) => el.classList.add('in')); return; }
+    $$('.reveal,.reveal-l,.reveal-r', scope).forEach((el) => revealIO.observe(el));
   }
-
-  /*==================== RENDER: HERO ====================*/
-  (function hero() {
-    const H = D.HERO;
-    if (!H) return;
-    const set = (id, v) => { const el = $(id); if (el && v != null) el.textContent = v; };
-    set('#hero-role', H.role); set('#hero-company', H.company);
-    set('#hero-headline', H.headline); set('#hero-intro', H.intro);
-    set('#hero-location', H.location);
-    set('#card-name', H.name); set('#card-role', H.role); set('#card-company', H.company);
-    const resume = $('#hero-resume'); if (resume && H.resume) resume.href = H.resume;
-
-    const socialHtml = (H.socials || []).map((s) =>
-      `<li><a href="${s.href}" ${externalAttrs(s.href)} class="icon-button icon-button--sm" aria-label="${s.label}">${icon(s.icon)}</a></li>`).join('');
-    const hs = $('#hero-social'); if (hs) hs.innerHTML = socialHtml;
-    const fs = $('#footer-social'); if (fs) fs.innerHTML = socialHtml;
-
-    const facts = $('#card-facts');
-    if (facts && H.facts) facts.innerHTML = H.facts.map((f) => `<div class="syscard__row"><dt>${f.key}</dt><dd>${f.value}</dd></div>`).join('');
-
-    const pipe = $('#card-pipeline');
-    if (pipe && H.pipeline) {
-      pipe.innerHTML = `
-        <div class="syscard__pipeline-title">Delivery pipeline</div>
-        <div class="pipe">
-          <div class="pipe__track" aria-hidden="true"><span class="pipe__packet"></span></div>
-          ${H.pipeline.map((n) => `
-            <div class="pipe__node">
-              <span class="pipe__icon">${icon(n.icon)}</span>
-              <span class="pipe__label">${n.label}</span>
-              <span class="pipe__sub">${n.sub}</span>
-            </div>`).join('')}
-        </div>`;
-    }
-  })();
-
-  /*==================== RENDER: ABOUT ====================*/
-  (function about() {
-    const A = D.ABOUT;
-    if (!A) return;
-    const text = $('#about-text');
-    if (text) text.innerHTML = A.paragraphs.map((p) => `<p>${p}</p>`).join('');
-    const chips = $('#about-chips');
-    if (chips) chips.innerHTML = A.chips.map((c) => `<li class="chip chip--accent">${c}</li>`).join('');
-    const stats = $('#about-stats');
-    if (stats) stats.innerHTML = A.stats.map((s) => `
-      <div class="about__stat">
-        <dt>${s.label}</dt>
-        <dd><span data-count="${s.value}">0</span>${s.suffix ? `<sup>${s.suffix}</sup>` : ''}</dd>
-      </div>`).join('');
-    const cards = $('#about-cards');
-    if (cards) cards.innerHTML = A.cards.map((c) => `
-      <li class="about__card">
-        ${icon(c.icon)}
-        <div><h3>${c.title}</h3><p>${c.text}</p></div>
-      </li>`).join('');
-  })();
-
-  /*==================== RENDER: SKILLS ====================*/
-  (function skills() {
-    const box = $('#skills-container');
-    if (!box || !D.SKILLS) return;
-    box.innerHTML = D.SKILLS.map((g, i) => `
-      <section class="skills__group reveal" data-delay="${(i % 2) + 1}" aria-labelledby="skills-g${i}">
-        <div class="skills__group-head">
-          ${icon(g.icon)}
-          <h3 class="skills__group-title" id="skills-g${i}">${g.title}</h3>
-          <span class="skills__count">${String(g.items.length).padStart(2, '0')}</span>
-        </div>
-        <ul class="chip-list">
-          ${g.items.map((s) => `<li class="chip"><img class="chip__logo${s.mono ? ' chip__logo--mono' : ''}" src="${LOGO_BASE}${s.logo}.svg" alt="" width="18" height="18" loading="lazy" decoding="async">${s.name}</li>`).join('')}
-        </ul>
-      </section>`).join('');
-    observeReveals(box);
-  })();
-
-  /*==================== RENDER: TIMELINES ====================*/
-  function renderTimeline(elId, items, opts = {}) {
-    const box = $(elId);
-    if (!box || !items) return;
-    box.innerHTML = items.map((it) => {
-      const title = it.role || it.title;
-      const org = it.company || it.place;
-      const meta = `
-        <span class="timeline__date">${it.date}</span>
-        <span class="timeline__company">${org}</span>
-        ${it.location ? `<span class="timeline__location">${it.location}</span>` : ''}`;
-      return `
-      <li class="timeline__item reveal ${it.current ? 'timeline__item--current' : ''}">
-        <div class="timeline__meta" aria-hidden="true">${meta}</div>
-        <div class="timeline__body">
-          <div class="timeline__mobile-meta">
-            <span class="timeline__date">${it.date}</span>
-            <span class="timeline__org"><span class="timeline__company">${org}</span>${it.location ? `<span class="timeline__location"> · ${it.location}</span>` : ''}</span>
-          </div>
-          <h3 class="timeline__role">${title}${it.current ? '<span class="timeline__badge">Current</span>' : ''}</h3>
-          <p class="timeline__summary">${it.summary || it.desc}</p>
-          ${opts.points && it.points ? `<ul class="timeline__points">${it.points.map((p) => `<li>${p}</li>`).join('')}</ul>` : ''}
-          ${it.tags ? tags(it.tags) : ''}
-        </div>
-      </li>`;
-    }).join('');
-    observeReveals(box);
-  }
-  renderTimeline('#experience-timeline', D.EXPERIENCE, { points: true });
-  renderTimeline('#education-timeline', D.EDUCATION);
-
-  /*==================== RENDER: PROJECTS ====================*/
-  (function projects() {
-    const featuredBox = $('#projects-featured');
-    const grid = $('#projects-grid');
-    if (!D.PROJECTS) return;
-
-    const links = (p, size = '') => [
-      p.github ? `<a href="${p.github}" ${externalAttrs(p.github)} class="icon-button ${size}" aria-label="${p.title} on GitHub" title="GitHub">${icon('uil-github-alt')}</a>` : '',
-      p.demo ? `<a href="${p.demo}" ${externalAttrs(p.demo)} class="icon-button ${size}" aria-label="${p.demoLabel || 'Live demo'}: ${p.title}" title="${p.demoLabel || 'Live demo'}">${icon(p.demo.startsWith('#') ? 'uil-arrow-down' : 'uil-external-link-alt')}</a>` : '',
-    ].join('');
-
-    const node = (n) => `
-      <div class="diagram__node ${n.accent ? 'diagram__node--accent' : ''}">
-        ${n.icon ? icon(n.icon) : ''}
-        <b>${n.label}</b>
-        ${n.sub ? `<small>${n.sub}</small>` : ''}
-      </div>`;
-    const arrow = () => `<span class="diagram__arrow" aria-hidden="true">${icon('uil-arrow-right')}</span>`;
-
-    const diagram = (d, title) => {
-      if (!d) return '';
-      const parts = [];
-      const w = d.wrap;
-      d.nodes.forEach((n, i) => {
-        if (w && i === w.from) {
-          const group = d.nodes.slice(w.from, w.to + 1).map(node).join('');
-          parts.push(`<div class="diagram__group"><span class="diagram__group-label">${w.label}</span>${group}</div>`);
-        } else if (w && i > w.from && i <= w.to) {
-          return;
-        } else {
-          parts.push(node(n));
-        }
-      });
-      const flow = parts.join(arrow());
-      const before = d.before ? `<div class="diagram__before"><span>replaces</span> <s>${d.before}</s> <span>→</span> <em>${d.nodes.find((n) => n.accent)?.label || ''}</em></div>` : '';
-      return `<div class="diagram" role="img" aria-label="Architecture of ${title}: ${d.nodes.map((n) => n.label).join(' → ')}">
-        <div class="diagram__flow">${flow}</div>${before}
-      </div>`;
-    };
-
-    const featured = D.PROJECTS.filter((p) => p.featured);
-    if (featuredBox) featuredBox.innerHTML = featured.map((p, i) => `
-      <article class="case reveal" aria-labelledby="case-${i}">
-        <div class="case__visual">
-          <span class="case__visual-label">Architecture</span>
-          ${diagram(p.diagram, p.title)}
-        </div>
-        <div class="case__content">
-          <span class="case__kind">${p.kind}</span>
-          <h3 class="case__title" id="case-${i}">${p.title}</h3>
-          <p class="case__desc">${p.desc}</p>
-          <dl class="case__story">
-            <div class="case__story-row"><dt>Problem</dt><dd>${p.context}</dd></div>
-            <div class="case__story-row"><dt>Approach</dt><dd>${p.approach}</dd></div>
-            <div class="case__story-row"><dt>Outcome</dt><dd>${p.outcome}</dd></div>
-          </dl>
-          <div class="case__foot">
-            ${tags(p.tags)}
-            <div class="case__links">${links(p, 'icon-button--sm')}</div>
-          </div>
-        </div>
-      </article>`).join('');
-
-    const rest = D.PROJECTS.filter((p) => !p.featured);
-    if (grid) grid.innerHTML = rest.map((p, i) => `
-      <li class="project reveal" data-delay="${(i % 3) + 1}">
-        <div class="project__top">
-          <span class="project__icon">${icon(p.icon || 'uil-folder')}</span>
-          <span class="project__kind">${p.kind}</span>
-        </div>
-        <h4 class="project__title">${p.title}</h4>
-        <p class="project__desc">${p.desc}</p>
-        <div class="project__foot">
-          ${tags(p.tags)}
-          <div class="project__links">${links(p, 'icon-button--sm')}</div>
-        </div>
-      </li>`).join('');
-
-    observeReveals($('#projects'));
-  })();
-
-  /*==================== RENDER: TESTIMONIALS ====================*/
-  (function testimonials() {
-    const grid = $('#testimonial-grid');
-    if (!grid || !D.TESTIMONIALS) return;
-    grid.innerHTML = D.TESTIMONIALS.map((t, i) => `
-      <li>
-        <figure class="quote reveal" data-delay="${(i % 3) + 1}">
-          <blockquote><p>${t.text}</p></blockquote>
-          <figcaption>
-            <img src="${t.img}" alt="" class="quote__avatar" width="40" height="40" loading="lazy" decoding="async">
-            <div><span class="quote__name">${t.name}</span><span class="quote__role">${t.role}</span></div>
-          </figcaption>
-        </figure>
-      </li>`).join('');
-    observeReveals(grid);
-  })();
 
   /*==================== ANIMATED COUNTERS ====================*/
   (function counters() {
@@ -332,61 +135,317 @@
     if (!items.length) return;
     const run = (el) => {
       const target = +el.dataset.count;
-      if (reduceMotion || target <= 1) { el.textContent = target; return; }
-      const start = performance.now(), dur = 900;
-      const tick = (now) => {
-        const p = Math.min(1, (now - start) / dur);
-        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+      const suffix = el.dataset.suffix || '';
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      let n = 0; const stepN = Math.max(1, Math.ceil(target / 40));
+      const t = setInterval(() => {
+        n += stepN;
+        if (n >= target) { n = target; clearInterval(t); }
+        el.textContent = n + suffix;
+      }, 30);
     };
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries, obs) => {
         entries.forEach((e) => { if (e.isIntersecting) { run(e.target); obs.unobserve(e.target); } });
-      }, { threshold: 0.6 });
+      }, { threshold: 0.5 });
       items.forEach((i) => io.observe(i));
     } else items.forEach(run);
+  })();
+
+  /*==================== CUSTOM CURSOR ====================*/
+  (function cursor() {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    const dot = $('.cursor-dot'), ring = $('.cursor-ring');
+    if (!dot || !ring) return;
+    let mx = 0, my = 0, rx = 0, ry = 0, has = false;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY; has = true;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    function raf() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(raf);
+    }
+    if (!reduceMotion) raf();
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .portfolio__card, .games__tab, .memory__card, [role="button"], input, textarea'))
+        ring.classList.add('grow');
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .portfolio__card, .games__tab, .memory__card, [role="button"], input, textarea'))
+        ring.classList.remove('grow');
+    });
+  })();
+
+  /*==================== PARTICLES ====================*/
+  (function particles() {
+    const canvas = $('#particles');
+    if (!canvas || reduceMotion) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, pts, raf, mouse = { x: -999, y: -999 };
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      const count = Math.min(80, Math.floor((w * h) / 18000));
+      pts = Array.from({ length: count }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 1.8 + 0.8,
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        // mouse repel
+        const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.hypot(dx, dy);
+        if (dist < 120) { p.x += dx / dist * 0.8; p.y += dy / dist * 0.8; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(34,197,94,0.55)';
+        ctx.fill();
+        for (let j = i + 1; j < pts.length; j++) {
+          const q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
+          if (d < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(34,197,94,${0.14 * (1 - d / 120)})`;
+            ctx.lineWidth = 1; ctx.stroke();
+          }
+        }
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseout', () => { mouse.x = mouse.y = -999; });
+    window.addEventListener('resize', resize);
+    resize(); draw();
+  })();
+
+  /*==================== RENDER: ABOUT ====================*/
+  (function about() {
+    const chips = $('#about-chips');
+    if (chips && D.ABOUT_CHIPS) chips.innerHTML = D.ABOUT_CHIPS.map((c) => `<span class="about__chip">${c}</span>`).join('');
+    const cards = $('#about-cards');
+    if (cards && D.ABOUT_CARDS) cards.innerHTML = D.ABOUT_CARDS.map((c) => `
+      <div class="about__card glass">
+        <i class="uil ${c.icon}"></i>
+        <h4>${c.title}</h4>
+        <p>${c.text}</p>
+      </div>`).join('');
+  })();
+
+  /*==================== RENDER: SKILLS ====================*/
+  (function skills() {
+    const box = $('#skills-container');
+    if (!box || !D.SKILLS) return;
+    box.innerHTML = D.SKILLS.map((cat, ci) => `
+      <div class="skills__card glass reveal" data-delay="${(ci % 3) + 1}">
+        <div class="skills__card-header">
+          <span class="skills__icon"><i class="uil ${cat.icon}"></i></span>
+          <h3 class="skills__card-title">${cat.title}</h3>
+        </div>
+        ${cat.items.map((s) => `
+          <div class="skill">
+            <div class="skill__top">
+              <span class="skill__name"><i class="${s.icon} colored"></i> ${s.name}</span>
+            </div>
+          </div>`).join('')}
+      </div>`).join('');
+    observeReveals(box);
+  })();
+
+  /*==================== RENDER: TIMELINES ====================*/
+  function renderTimeline(elId, items, withPoints) {
+    const box = $(elId);
+    if (!box || !items) return;
+    box.innerHTML = items.map((it, i) => `
+      <div class="timeline__item reveal" data-delay="${(i % 3) + 1}">
+        <span class="timeline__dot"></span>
+        <div class="timeline__content glass">
+          <div class="timeline__head">
+            <span class="timeline__logo"><i class="uil ${it.icon}"></i></span>
+            <div>
+              <h3 class="timeline__title">${it.role || it.title}</h3>
+              <span class="timeline__place">${it.company || it.place}${it.location ? ' · ' + it.location : ''}</span>
+            </div>
+          </div>
+          <span class="timeline__date"><i class="uil uil-calendar-alt"></i> ${it.date}</span>
+          <p class="timeline__description">${it.summary || it.desc}</p>
+          ${withPoints && it.points ? `<ul class="timeline__list">${it.points.map((p) => `<li><i class="uil uil-check-circle"></i> ${p}</li>`).join('')}</ul>` : ''}
+          ${it.tags ? `<div class="timeline__tags">${it.tags.map((t) => `<span>${t}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>`).join('');
+    observeReveals(box);
+  }
+  renderTimeline('#experience-timeline', D.EXPERIENCE, true);
+  renderTimeline('#education-timeline', D.EDUCATION, false);
+
+  /*==================== RENDER: PORTFOLIO + FILTER + MODAL ====================*/
+  (function portfolio() {
+    const grid = $('#portfolio-grid');
+    const filters = $('#portfolio-filters');
+    if (!grid || !D.PROJECTS) return;
+    const CATS = [
+      { key: 'all', label: 'All' },
+      { key: 'backend', label: 'Backend' },
+      { key: 'frontend', label: 'Frontend' },
+      { key: 'fullstack', label: 'Full Stack' },
+      { key: 'personal', label: 'Personal' },
+    ];
+    const present = new Set(D.PROJECTS.map((p) => p.category));
+    filters.innerHTML = CATS.filter((c) => c.key === 'all' || present.has(c.key))
+      .map((c, i) => `<button class="portfolio__filter ${i === 0 ? 'active' : ''}" data-cat="${c.key}">${c.label}</button>`).join('');
+
+    grid.innerHTML = D.PROJECTS.map((p, i) => `
+      <article class="portfolio__card glass reveal" data-cat="${p.category}" data-i="${i}" data-delay="${(i % 3) + 1}">
+        <div class="portfolio__img-wrapper">
+          <span class="portfolio__cat">${labelFor(p.category)}</span>
+          <img src="${p.img}" alt="${p.title}" class="portfolio__img" loading="lazy">
+          <div class="portfolio__overlay">
+            ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener" class="portfolio__link" aria-label="GitHub" data-stop><i class="uil uil-github-alt"></i></a>` : ''}
+            ${p.demo ? `<a href="${p.demo}" ${p.demo.startsWith('#') ? '' : 'target="_blank" rel="noopener"'} class="portfolio__link" aria-label="Live demo" data-stop><i class="uil uil-external-link-alt"></i></a>` : ''}
+          </div>
+        </div>
+        <div class="portfolio__info">
+          <h3 class="portfolio__title">${p.title}</h3>
+          <p class="portfolio__description">${p.desc}</p>
+          <div class="portfolio__tags">${p.tags.map((t) => `<span>${t}</span>`).join('')}</div>
+        </div>
+      </article>`).join('');
+    observeReveals(grid);
+
+    function labelFor(k) { return (CATS.find((c) => c.key === k) || {}).label || k; }
+
+    filters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.portfolio__filter');
+      if (!btn) return;
+      $$('.portfolio__filter').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      $$('.portfolio__card', grid).forEach((card) => {
+        card.classList.toggle('hide', !(cat === 'all' || card.dataset.cat === cat));
+      });
+    });
+
+    // Modal
+    const modal = $('#project-modal');
+    const openModal = (p) => {
+      $('#modal-img').src = p.img; $('#modal-img').alt = p.title;
+      $('#modal-title').textContent = p.title;
+      $('#modal-desc').textContent = p.desc;
+      $('#modal-tags').innerHTML = p.tags.map((t) => `<span>${t}</span>`).join('');
+      $('#modal-actions').innerHTML =
+        (p.github ? `<a href="${p.github}" target="_blank" rel="noopener" class="button button--ghost"><i class="uil uil-github-alt"></i> Code</a>` : '') +
+        (p.demo ? `<a href="${p.demo}" ${p.demo.startsWith('#') ? '' : 'target="_blank" rel="noopener"'} class="button"><i class="uil uil-external-link-alt"></i> Live Demo</a>` : '');
+      modal.classList.add('show');
+    };
+    const closeModal = () => modal.classList.remove('show');
+
+    grid.addEventListener('click', (e) => {
+      if (e.target.closest('[data-stop]')) return; // let links work
+      const card = e.target.closest('.portfolio__card');
+      if (card) openModal(D.PROJECTS[+card.dataset.i]);
+    });
+    $('#modal-close').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  })();
+
+  /*==================== RENDER: TESTIMONIALS CAROUSEL ====================*/
+  (function testimonials() {
+    const track = $('#testimonial-track');
+    const dots = $('#testimonial-dots');
+    if (!track || !D.TESTIMONIALS) return;
+    const items = D.TESTIMONIALS;
+    let idx = 0, timer;
+
+    track.innerHTML = items.map((t) => `
+      <div class="testimonial__card">
+        <div class="testimonial__quote"><i class="uil uil-comment-alt-dots"></i></div>
+        <p class="testimonial__text">${t.text}</p>
+        <div class="testimonial__author">
+          <img src="${t.img}" alt="${t.name}" class="testimonial__author-img" loading="lazy">
+          <div>
+            <h4 class="testimonial__author-name">${t.name}</h4>
+            <span class="testimonial__author-role">${t.role}</span>
+          </div>
+        </div>
+      </div>`).join('');
+    dots.innerHTML = items.map((_, i) => `<button class="testimonial__dot ${i === 0 ? 'active' : ''}" data-i="${i}" aria-label="Slide ${i + 1}"></button>`).join('');
+
+    function go(n) {
+      idx = (n + items.length) % items.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      $$('.testimonial__dot', dots).forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+    function auto() { clearInterval(timer); if (!reduceMotion) timer = setInterval(() => go(idx + 1), 5500); }
+
+    $('#t-next').addEventListener('click', () => { go(idx + 1); auto(); });
+    $('#t-prev').addEventListener('click', () => { go(idx - 1); auto(); });
+    dots.addEventListener('click', (e) => { const b = e.target.closest('.testimonial__dot'); if (b) { go(+b.dataset.i); auto(); } });
+    const carousel = $('.testimonial__carousel');
+    carousel.addEventListener('mouseenter', () => clearInterval(timer));
+    carousel.addEventListener('mouseleave', auto);
+    // swipe
+    let sx = 0;
+    carousel.addEventListener('touchstart', (e) => sx = e.touches[0].clientX, { passive: true });
+    carousel.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); auto(); }
+    });
+    auto();
+  })();
+
+  /*==================== HEATMAP (mock data) ====================*/
+  (function heatmap() {
+    const grid = $('#heatmap-grid');
+    if (!grid) return;
+    const WEEKS = 26; // ~6 months
+    const cells = WEEKS * 7;
+    let total = 0;
+    let html = '';
+    for (let i = 0; i < cells; i++) {
+      // pseudo activity with weekend dip
+      const dow = i % 7;
+      let r = Math.random();
+      if (dow === 0 || dow === 6) r *= 0.5;
+      const level = r < 0.45 ? 0 : r < 0.65 ? 1 : r < 0.82 ? 2 : r < 0.93 ? 3 : 4;
+      total += level;
+      html += `<span class="heatmap__cell" data-l="${level}"></span>`;
+    }
+    grid.innerHTML = html;
+    const t = $('#heatmap-total');
+    if (t) t.textContent = `${total * 3 + 120} contributions in the last 6 months`;
   })();
 
   /*==================== CONTACT FORM ====================*/
   (function contact() {
     const form = $('#contact-form');
     if (!form) return;
-    const status = $('#cf-status');
-    const note = (msg, cls) => { if (status) { status.textContent = msg; status.className = 'contact__form-note ' + (cls || ''); } };
-    const fields = ['name', 'email', 'message'].map((n) => form.elements[n]);
-    fields.forEach((f) => f && f.addEventListener('input', () => f.removeAttribute('aria-invalid')));
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      let firstInvalid = null;
-      fields.forEach((f) => {
-        const bad = !f.value.trim() || (f.type === 'email' && !f.checkValidity());
-        f.toggleAttribute('aria-invalid', bad);
-        if (bad) { f.setAttribute('aria-invalid', 'true'); firstInvalid = firstInvalid || f; }
-      });
-      if (firstInvalid) { firstInvalid.focus(); note('Please fill in your name, a valid email and a message.', 'err'); return; }
-
       const data = Object.fromEntries(new FormData(form));
+      if (!data.name || !data.email || !data.message) { toast('Please fill in all required fields.', true); return; }
+
       const endpoint = form.dataset.formspree;
-      const btn = form.querySelector('[type="submit"]');
       if (endpoint) {
-        btn.disabled = true; note('Sending…');
         try {
           const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-          if (!res.ok) throw new Error('bad response');
-          note("Message sent — I'll get back to you soon.", 'ok'); toast("Message sent — I'll be in touch soon.");
-          form.reset();
-        } catch {
-          note('Something went wrong. Please email me directly at ' + (D.HERO?.email || 'maderahano@gmail.com') + '.', 'err');
-          toast('Could not send. Try emailing me directly.', true);
-        } finally { btn.disabled = false; }
+          if (res.ok) { toast("Message sent — I'll be in touch soon! 🚀"); form.reset(); }
+          else throw new Error('bad response');
+        } catch { toast('Something went wrong. Try emailing me directly.', true); }
       } else {
+        // mailto fallback (no backend)
         const subject = encodeURIComponent(data.subject || `Portfolio contact from ${data.name}`);
         const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`);
-        window.location.href = `mailto:${D.HERO?.email || 'maderahano@gmail.com'}?subject=${subject}&body=${body}`;
-        note('Opening your email app…', 'ok');
+        window.location.href = `mailto:mdrahano12@gmail.com?subject=${subject}&body=${body}`;
+        toast('Opening your email app… 📬');
         form.reset();
       }
     });
@@ -398,7 +457,7 @@
     if (!wrap) return;
     const el = document.createElement('div');
     el.className = 'toast' + (isError ? ' error' : '');
-    el.innerHTML = `${icon(isError ? 'uil-exclamation-triangle' : 'uil-check-circle')}<span>${msg}</span>`;
+    el.innerHTML = `<i class="uil ${isError ? 'uil-exclamation-triangle' : 'uil-check-circle'}"></i><span>${msg}</span>`;
     wrap.appendChild(el);
     requestAnimationFrame(() => el.classList.add('show'));
     setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 3800);
@@ -421,17 +480,18 @@
     ls.set('achievements', [...all]);
     achievement(title, sub);
   }
-  window.addEventListener('dino:milestone', () => unlock('dino-runner', 'Cube Runner 🦖', 'Scored 100+ in Cube Run!'));
+  // game-driven achievements
+  window.addEventListener('dino:milestone', () => unlock('dino-runner', 'Cube Runner 🦖', 'Scored 100+ in Dino Run!'));
   window.addEventListener('snake:over', (e) => { if (e.detail.score >= 100) unlock('snake-100', 'Snake Charmer 🐍', 'Scored 100+ in Snake!'); });
 
   /*==================== EASTER EGGS ====================*/
   (function eggs() {
     const SPOTS = [
-      { id: 'about', sel: '#about', icon: 'uil-rocket', css: 'top:14%;right:4%;', name: 'Liftoff', msg: 'You found the rocket! 🚀' },
-      { id: 'skills', sel: '#skills', icon: 'uil-bug', css: 'bottom:8%;left:3%;', name: 'Bug Hunter', msg: 'Squashed a hidden bug! 🐛' },
-      { id: 'exp', sel: '#experience', icon: 'uil-coffee', css: 'top:18%;right:3%;', name: 'Fuel Up', msg: 'Coffee located. Productivity +10! ☕' },
-      { id: 'projects', sel: '#projects', icon: 'uil-keyboard', css: 'bottom:10%;right:4%;', name: 'Keystroke', msg: 'A wild keyboard appears! ⌨️' },
-      { id: 'games', sel: '#games', icon: 'uil-game-structure', css: 'top:22%;left:3%;', name: 'Player Two', msg: 'Secret game token! 🎮' },
+      { id: 'about', sel: '#about', icon: 'uil-rocket', css: 'top:14%;right:6%;', name: 'Liftoff', msg: 'You found the rocket! 🚀' },
+      { id: 'skills', sel: '#skills', icon: 'uil-bug', css: 'bottom:8%;left:4%;', name: 'Bug Hunter', msg: 'Squashed a hidden bug! 🐛' },
+      { id: 'exp', sel: '#experience', icon: 'uil-coffee', css: 'top:18%;left:3%;', name: 'Fuel Up', msg: 'Coffee located. Productivity +10! ☕' },
+      { id: 'portfolio', sel: '#portfolio', icon: 'uil-keyboard', css: 'bottom:10%;right:5%;', name: 'Keystroke', msg: 'A wild keyboard appears! ⌨️' },
+      { id: 'games', sel: '#games', icon: 'uil-game-structure', css: 'top:22%;right:4%;', name: 'Player Two', msg: 'Secret game token! 🎮' },
     ];
     const found = new Set(ls.get('eggs-found', []));
     const counter = $('#egg-count');
@@ -440,14 +500,12 @@
     SPOTS.forEach((spot) => {
       const host = $(spot.sel);
       if (!host) return;
-      host.style.position = 'relative';
-      const egg = document.createElement('button');
-      egg.type = 'button';
-      egg.className = 'egg' + (found.has(spot.id) ? ' found' : '');
+      const egg = document.createElement('i');
+      egg.className = 'uil ' + spot.icon + ' egg' + (found.has(spot.id) ? ' found' : '');
       egg.style.cssText = spot.css;
-      egg.setAttribute('aria-label', 'Hidden easter egg');
-      egg.innerHTML = icon(spot.icon);
-      egg.addEventListener('click', () => {
+      egg.title = 'A hidden something…';
+      egg.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (found.has(spot.id)) return;
         found.add(spot.id);
         ls.set('eggs-found', [...found]);
@@ -462,10 +520,9 @@
     });
 
     // Konami code
-    const seq = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+    const seq = ['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
     let pos = 0;
     document.addEventListener('keydown', (e) => {
-      if (!e.key) return;
       pos = (e.key.toLowerCase() === seq[pos]) ? pos + 1 : 0;
       if (pos === seq.length) {
         pos = 0;

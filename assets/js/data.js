@@ -1,123 +1,103 @@
 /*==================================================================
   Portfolio content — single source of truth.
   Edit anything here; the UI renders from these objects.
-  Unicons classes (uil-*) power the UI icons; Devicon SVGs power tech logos.
+  Skill `level` = self-rated proficiency % (drives the progress bars).
+  Devicon classes power the tech logos (https://devicon.dev).
 ==================================================================*/
 
-/* Hero + identity */
-const HERO = {
-  name: 'Made Rahano',
-  fullName: 'Made Rahano Satryani Widhi',
-  handle: 'maderahano',
-  role: 'Backend Infrastructure Engineer',
-  company: 'Traveloka',
-  location: 'Jakarta, Indonesia',
-  timezone: 'UTC+7',
-  headline: 'I build and automate the infrastructure behind backend systems.',
-  intro:
-    'Software engineer with 3+ years across backend and infrastructure — Java, Go and Python on AWS, with Terraform, Kubernetes and CI/CD that keep services reliable and easy to evolve.',
-  /* "key: value" lines for the system card */
-  facts: [
-    { key: 'focus', value: 'Backend · Infrastructure · DevOps' },
-    { key: 'stack', value: 'Java 21 · Spring Boot 3 · Go · Python' },
-    { key: 'cloud', value: 'AWS · Terraform · Kubernetes · GitHub Actions' },
-    { key: 'data', value: 'PostgreSQL · MySQL · Redis' },
-  ],
-  /* Delivery pipeline shown in the hero card — the stack he actually runs */
-  pipeline: [
-    { icon: 'uil-code-branch', label: 'Code', sub: 'Java · Go' },
-    { icon: 'uil-process', label: 'CI/CD', sub: 'GitHub Actions' },
-    { icon: 'uil-layer-group', label: 'Infra as Code', sub: 'Terraform' },
-    { icon: 'uil-cloud', label: 'Cloud', sub: 'AWS · Kubernetes' },
-  ],
-  resume: 'assets/pdf/Made-Rahano-CV.pdf',
-  email: 'maderahano@gmail.com',
-  socials: [
-    { label: 'GitHub', icon: 'uil-github-alt', href: 'https://github.com/maderahano' },
-    { label: 'LinkedIn', icon: 'uil-linkedin-alt', href: 'https://www.linkedin.com/in/maderahano/' },
-    { label: 'Instagram', icon: 'uil-instagram', href: 'https://www.instagram.com/md.rahano/' },
-  ],
-};
+/* Hero typing-effect roles */
+const TYPED_ROLES = [
+  'Software Engineer',
+  'Backend Developer',
+  'Infrastructure & DevOps Engineer',
+  'Cloud Enthusiast',
+  'Problem Solver',
+];
 
-/* About section */
-const ABOUT = {
-  paragraphs: [
-    'I\'m a <strong>Software Engineer</strong> with 3+ years of experience specializing in backend development, DevOps practices and cloud infrastructure. My core expertise lives in <strong>Java, Go and Python</strong>, complemented by hands-on cloud and infrastructure-as-code work.',
-    'I care about systems that are reliable, observable and easy to evolve — and about keeping the developer experience around them sharp. I\'m continuously exploring distributed systems, Kubernetes and how AI/ML fits into production.',
-  ],
-  chips: ['Go', 'Java', 'Python', 'AWS', 'Kubernetes', 'Terraform', 'PostgreSQL'],
-  stats: [
-    { value: 3, suffix: '+', label: 'Years of experience' },
-    { value: 3, suffix: '', label: 'Companies' },
-    { value: 4, suffix: '', label: 'Engineering roles' },
-  ],
-  cards: [
-    { icon: 'uil-server-network', title: 'Backend & Infra', text: 'Scalable services, IaC, and CI/CD that ship safely.' },
-    { icon: 'uil-cloud-data-connection', title: 'Cloud Native', text: 'AWS, Docker & Kubernetes in production.' },
-    { icon: 'uil-tachometer-fast-alt', title: 'Efficiency', text: 'Cost-efficient systems and faster pipelines.' },
-    { icon: 'uil-graduation-cap', title: 'Always Learning', text: 'Currently exploring distributed systems & AI/ML.' },
-  ],
-};
+/* About section — quick highlight chips + fun-fact cards */
+const ABOUT_CHIPS = ['Go', 'Java', 'Python', 'AWS', 'Kubernetes', 'Terraform', 'PostgreSQL'];
 
-/* Skills — grouped.
-   `logo` is a Devicon SVG path (https://devicon.dev), e.g. 'go/go-original'.
-   `mono: true` marks black-on-transparent logos so they invert on the dark theme. */
+const ABOUT_CARDS = [
+  { icon: 'uil-server-network', title: 'Backend & Infra', text: 'Scalable services, IaC, and CI/CD that ship safely.' },
+  { icon: 'uil-cloud-data-connection', title: 'Cloud Native', text: 'AWS, Docker & Kubernetes in production.' },
+  { icon: 'uil-rocket', title: 'Performance', text: 'Cost-efficient systems and faster pipelines.' },
+  { icon: 'uil-graduation-cap', title: 'Always Learning', text: 'Currently exploring distributed systems & AI/ML.' },
+];
+
+const FUN_FACTS = [
+  '☕ Runs on coffee and clean commit history',
+  '🐧 Daily-drives Linux and lives in the terminal',
+  '🎮 Builds little games for fun (try the ones below!)',
+  '🏎️  Reduced a deployment pipeline by migrating to GitHub Actions',
+];
+
+/* Skills — grouped, with proficiency levels */
 const SKILLS = [
   {
     title: 'Backend',
     icon: 'uil-brackets-curly',
     items: [
-      { name: 'Go', logo: 'go/go-original-wordmark' },
-      { name: 'Java / Spring Boot', logo: 'spring/spring-original' },
-      { name: 'Python', logo: 'python/python-original' },
-      { name: 'PHP / Laravel', logo: 'laravel/laravel-original' },
-      { name: 'C', logo: 'c/c-original' },
-    ],
-  },
-  {
-    title: 'DevOps & Cloud',
-    icon: 'uil-cloud',
-    items: [
-      { name: 'AWS', logo: 'amazonwebservices/amazonwebservices-plain-wordmark' },
-      { name: 'Terraform', logo: 'terraform/terraform-original' },
-      { name: 'Kubernetes', logo: 'kubernetes/kubernetes-plain' },
-      { name: 'Docker', logo: 'docker/docker-original' },
-      { name: 'GitHub Actions / CI-CD', logo: 'githubactions/githubactions-original' },
-      { name: 'Ansible', logo: 'ansible/ansible-original', mono: true },
+      { name: 'Go', icon: 'devicon-go-original-wordmark'},
+      { name: 'Java / Spring Boot', icon: 'devicon-spring-plain'},
+      { name: 'Python', icon: 'devicon-python-plain'},
+      { name: 'PHP / Laravel', icon: 'devicon-laravel-plain'},
+      { name: 'C', icon: 'devicon-c-plain'},
     ],
   },
   {
     title: 'Databases',
     icon: 'uil-database',
     items: [
-      { name: 'PostgreSQL', logo: 'postgresql/postgresql-original' },
-      { name: 'MySQL', logo: 'mysql/mysql-original' },
-      { name: 'Redis', logo: 'redis/redis-original' },
-      { name: 'MongoDB', logo: 'mongodb/mongodb-original' },
+      { name: 'PostgreSQL', icon: 'devicon-postgresql-plain'},
+      { name: 'MySQL', icon: 'devicon-mysql-plain'},
+      { name: 'Redis', icon: 'devicon-redis-plain'},
+      { name: 'MongoDB', icon: 'devicon-mongodb-plain'},
     ],
   },
+  {
+    title: 'DevOps & Cloud',
+    icon: 'uil-cloud',
+    items: [
+      { name: 'Docker', icon: 'devicon-docker-plain'},
+      { name: 'AWS', icon: 'devicon-amazonwebservices-plain-wordmark'},
+      { name: 'Kubernetes', icon: 'devicon-kubernetes-plain'},
+      { name: 'Terraform', icon: 'devicon-terraform-plain'},
+      { name: 'GitHub Actions / CI-CD', icon: 'devicon-githubactions-plain'},
+      { name: 'Ansible', icon: 'devicon-ansible-plain'},
+    ],
+  },
+  // {
+  //   title: 'Frontend',
+  //   icon: 'uil-web-grid',
+  //   items: [
+  //     { name: 'HTML5', icon: 'devicon-html5-plain'},
+  //     { name: 'CSS3', icon: 'devicon-css3-plain'},
+  //     { name: 'JavaScript', icon: 'devicon-javascript-plain'},
+  //     { name: 'React', icon: 'devicon-react-original'},
+  //   ],
+  // },
   {
     title: 'Tools & Workflow',
     icon: 'uil-wrench',
     items: [
-      { name: 'Git', logo: 'git/git-original' },
-      { name: 'Linux', logo: 'linux/linux-plain', mono: true },
-      { name: 'Grafana / Prometheus', logo: 'grafana/grafana-original' },
-      { name: 'Postman', logo: 'postman/postman-original' },
-      { name: 'Jira', logo: 'jira/jira-original' },
+      { name: 'Git', icon: 'devicon-git-plain'},
+      { name: 'Linux', icon: 'devicon-linux-plain'},
+      { name: 'Postman', icon: 'devicon-postman-plain'},
+      { name: 'Jira', icon: 'devicon-jira-plain'},
+      { name: 'Grafana / Prometheus', icon: 'devicon-grafana-original'},
     ],
   },
 ];
 
-/* Work experience */
+/* Work experience timeline */
 const EXPERIENCE = [
   {
     role: 'Backend Infrastructure Engineer',
     company: 'Traveloka',
     location: 'South Tangerang, ID',
     date: 'Apr 2024 — Present',
-    current: true,
-    summary: 'Building infrastructure solutions that improve system efficiency, maintainability and security across services.',
+    icon: 'uil-cloud-computing',
+    summary: 'Building infrastructure solutions that improve system efficiency, maintainability, and security across services.',
     points: [
       'Upgraded core services to Java 21 and Spring Boot 3.',
       'Migrated CI/CD from AWS CodeBuild & CodePipeline to GitHub Actions.',
@@ -130,6 +110,7 @@ const EXPERIENCE = [
     company: 'Jatis Mobile',
     location: 'Jakarta, ID',
     date: 'May 2023 — Apr 2024',
+    icon: 'uil-code-branch',
     summary: 'Developed and maintained back-office applications in a fast-paced, multi-industry tech environment.',
     points: [
       'Delivered client-requested features with PHP (Laravel) and Go (Echo, Gin).',
@@ -143,6 +124,7 @@ const EXPERIENCE = [
     company: 'Traveloka',
     location: 'South Tangerang, ID',
     date: 'Aug 2022 — Dec 2022',
+    icon: 'uil-server',
     summary: 'Joined the Infrastructure team to optimize AWS resource usage and reduce operational cost.',
     points: [
       'Migrated services from EC2 to ECS using Terraform.',
@@ -155,6 +137,7 @@ const EXPERIENCE = [
     company: 'PT. PAL Indonesia',
     location: 'Surabaya, ID',
     date: 'Oct 2021 — Jan 2022',
+    icon: 'uil-window',
     summary: 'Built an online internship registration system for the Human Capital Management division.',
     points: [
       'Developed the platform with Laravel, replacing an on-site paper process.',
@@ -164,119 +147,86 @@ const EXPERIENCE = [
   },
 ];
 
-/* Education */
+/* Education + certifications/training */
 const EDUCATION = [
   {
     title: 'B.A.Sc. in Informatics Engineering',
     place: 'Politeknik Elektronika Negeri Surabaya (PENS)',
-    location: 'Surabaya, ID',
     date: 'Jul 2019 — Sep 2023',
-    desc: 'Focused on software engineering, data structures & algorithms, and system programming. Hands-on with microservices, cloud computing and DevOps practices.',
+    icon: 'uil-graduation-cap',
+    desc: 'Focused on software engineering, data structures & algorithms, and system programming. Hands-on with microservices, cloud computing, and DevOps practices.',
     tags: ['Software Engineering', 'Algorithms', 'Cloud Computing'],
   },
+  // {
+  //   title: 'Certifications & Training',
+  //   place: 'Continuous professional development',
+  //   date: 'Ongoing',
+  //   icon: 'uil-award',
+  //   desc: 'Self-directed and program-based training in cloud infrastructure, container orchestration, and backend system design.',
+  //   tags: ['AWS', 'Kubernetes', 'Terraform', 'Backend Design'],
+  // },
 ];
 
-/* Projects.
-   `featured` projects render as case studies with an architecture preview.
-   `diagram` nodes are limited to the technologies named in the description/tags.
-   Diagram shape: { nodes: [{ label, sub?, icon? }], ... } rendered left → right;
-   an optional `wrap` label draws a container (e.g. "Kubernetes") around given node indexes. */
+/* Portfolio projects — category drives the filter chips.
+   Categories: 'backend' | 'frontend' | 'fullstack' | 'personal' */
 const PROJECTS = [
   {
-    title: 'CI/CD Pipeline Migration',
-    kind: 'Work · Traveloka',
-    category: 'Infrastructure',
-    featured: true,
-    desc: 'Migrated deployment pipelines from AWS CodeBuild/CodePipeline to GitHub Actions, cutting build times and simplifying maintenance with reusable workflows.',
-    context: 'Service deployments ran on AWS CodeBuild and CodePipeline, with pipeline logic that was hard to share and maintain across services.',
-    approach: 'Rebuilt the pipelines on GitHub Actions using reusable workflows, Docker-based builds and Bash tooling, deploying to AWS.',
-    outcome: 'Shorter build times and a single shared pipeline definition that is simpler to maintain.',
-    tags: ['GitHub Actions', 'Docker', 'AWS', 'Bash'],
-    diagram: {
-      nodes: [
-        { label: 'git push', icon: 'uil-code-branch' },
-        { label: 'GitHub Actions', sub: 'reusable workflows', icon: 'uil-process', accent: true },
-        { label: 'Docker build', icon: 'uil-box' },
-        { label: 'AWS', sub: 'deploy', icon: 'uil-cloud-upload' },
-      ],
-      before: 'AWS CodeBuild · CodePipeline',
-    },
+    title: 'Microservice Platform',
+    category: 'backend',
+    img: 'assets/img/portfolio1.jpg',
+    desc: 'A scalable microservice architecture built with Go, gRPC and Kubernetes for high-throughput, low-latency processing. Service discovery, health checks, and graceful shutdowns included.',
+    tags: ['Go', 'gRPC', 'Kubernetes', 'PostgreSQL'],
     github: 'https://github.com/maderahano',
+    demo: '',
   },
   {
     title: 'Infrastructure Automation',
-    kind: 'Infrastructure as Code',
-    category: 'Infrastructure',
-    featured: true,
+    category: 'backend',
+    img: 'assets/img/portfolio2.jpg',
     desc: 'Automated cloud provisioning using reusable Terraform modules and Ansible playbooks on AWS. One command spins up a reproducible environment from scratch.',
-    context: 'Goal: make a full AWS environment reproducible instead of hand-provisioned and drift-prone.',
-    approach: 'Reusable Terraform modules for the AWS resources, Ansible playbooks for machine configuration, wired into CI/CD.',
-    outcome: 'A complete environment can be created from scratch with a single command, the same way every time.',
     tags: ['Terraform', 'AWS', 'Ansible', 'CI/CD'],
-    diagram: {
-      nodes: [
-        { label: 'CI/CD', sub: 'one command', icon: 'uil-play' },
-        { label: 'Terraform', sub: 'reusable modules', icon: 'uil-layer-group', accent: true },
-        { label: 'AWS', sub: 'environment', icon: 'uil-cloud' },
-        { label: 'Ansible', sub: 'configuration', icon: 'uil-setting' },
-      ],
-    },
     github: 'https://github.com/maderahano',
+    demo: '',
   },
   {
-    title: 'Microservice Platform',
-    kind: 'Backend Architecture',
-    category: 'Backend',
-    featured: true,
-    desc: 'A scalable microservice architecture built with Go, gRPC and Kubernetes for high-throughput, low-latency processing. Service discovery, health checks and graceful shutdowns included.',
-    context: 'High-throughput, low-latency processing split across independently deployable services.',
-    approach: 'Go services communicating over gRPC, deployed on Kubernetes and backed by PostgreSQL.',
-    outcome: 'Service discovery, health checks and graceful shutdowns built in from the start.',
-    tags: ['Go', 'gRPC', 'Kubernetes', 'PostgreSQL'],
-    diagram: {
-      nodes: [
-        { label: 'Client', icon: 'uil-desktop' },
-        { label: 'Go service', sub: 'gRPC', icon: 'uil-server', accent: true },
-        { label: 'Go service', sub: 'gRPC', icon: 'uil-server', accent: true },
-        { label: 'PostgreSQL', icon: 'uil-database' },
-      ],
-      wrap: { label: 'Kubernetes', from: 1, to: 2 },
-    },
+    title: 'CI/CD Pipeline Migration',
+    category: 'fullstack',
+    img: 'assets/img/portfolio3.jpg',
+    desc: 'Migrated deployment pipelines from AWS CodeBuild/CodePipeline to GitHub Actions, cutting build times and simplifying maintenance with reusable workflows.',
+    tags: ['GitHub Actions', 'Docker', 'AWS', 'Bash'],
     github: 'https://github.com/maderahano',
+    demo: '',
   },
   {
     title: 'Internship Registration System',
-    kind: 'Work · PT. PAL Indonesia',
-    category: 'Full Stack',
-    icon: 'uil-file-check-alt',
-    desc: 'A Laravel web platform that digitized an on-site internship application process for a Human Capital division — end-to-end from form to approval.',
+    category: 'fullstack',
+    img: 'assets/img/project.png',
+    desc: 'A web platform built with Laravel that digitized an on-site internship application process for a Human Capital division, end-to-end from form to approval.',
     tags: ['Laravel', 'PHP', 'MySQL', 'Bootstrap'],
     github: 'https://github.com/maderahano',
+    demo: '',
   },
   {
     title: 'Personal Portfolio',
-    kind: 'Personal',
-    category: 'Frontend',
-    icon: 'uil-window',
-    desc: 'This site — a fully static portfolio with dark/light themes, data-driven sections, mini-games and easter eggs. Pure HTML, CSS and JavaScript; no build step.',
+    category: 'frontend',
+    img: 'assets/img/profil.png',
+    desc: 'This site — a fully static, animated portfolio with dark/light themes, particles, a custom cursor, mini-games and easter eggs. Pure HTML, CSS and JavaScript.',
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Canvas'],
     github: 'https://github.com/maderahano/maderahano.github.io',
     demo: 'https://maderahano.github.io',
   },
   {
     title: 'Browser Mini-Games',
-    kind: 'Personal',
-    category: 'Playground',
-    icon: 'uil-game-structure',
-    desc: 'A small collection of vanilla-JS games — Snake, Memory Match and Cube Run — built without a framework, with LocalStorage high-scores.',
+    category: 'personal',
+    img: 'assets/img/portfolio1.jpg',
+    desc: 'A small collection of vanilla-JS games — Snake, Memory Match and an offline-style Dino Run — built without any framework, with LocalStorage high-scores.',
     tags: ['JavaScript', 'Canvas', 'LocalStorage'],
     github: 'https://github.com/maderahano',
     demo: '#games',
-    demoLabel: 'Play below',
   },
 ];
 
-/* Testimonials */
+/* Testimonials carousel */
 const TESTIMONIALS = [
   {
     text: 'I highly recommend Rahano as an outstanding professional in the fields of DevOps and backend development. Rahano is quick to learn, adept at focusing on the root of problems, and always up-to-date with the latest technologies related to DevOps. His exceptional problem-solving skills make him a valuable asset to any team. Rahano is also great at engaging in technical discussions and planning projects, both in terms of problem-solving and technical implementation. I wholeheartedly endorse Rahano for any team or company in need of strong technical and interpersonal skills.',
@@ -291,10 +241,49 @@ const TESTIMONIALS = [
     img: 'assets/img/testimonial2.jpg',
   },
   {
-    text: "Rahano was my mentee during Kampus Merdeka internship program at Traveloka. During the collaboration, Rahano helped us a lot, not just about our projects but sometimes fix the tech debt also. He showed a good commitment to our projects, his weekly tasks always on track & finished on time. In day to day collaboration, any discussion between us is done smoothly. He's a good learner and have good communication skill, very recommend to work with Rahano. Thank you Rahano.",
+    text: "Rahano was my mentee during Kampus Merdeka internship program at Traveloka, During the collaboration, Rahano helped us a lot, not just about our projects but sometimes fix the tech debt also. He showed a good commitment to our projects, his weekly tasks always on track & finished on time. In day to day collaboration, any discussion between us is done smoothly. He's a good learner and have good communication skill, very recommend to work with Rahano. Thank you Rahano.",
     name: 'Harits Rahman Mazayamusthafa',
     role: 'Site Reliability Engineer',
     img: 'assets/img/testimonial3.jpg',
+  },
+];
+
+/* Coding quiz questions */
+const QUIZ = [
+  {
+    q: 'In Go, what does the `defer` keyword do?',
+    options: ['Runs a function immediately', 'Schedules a call to run when the surrounding function returns', 'Creates a goroutine', 'Declares a constant'],
+    answer: 1,
+  },
+  {
+    q: 'Which HTTP status code means "Too Many Requests"?',
+    options: ['401', '404', '429', '503'],
+    answer: 2,
+  },
+  {
+    q: 'In Docker, which instruction creates a new layer that runs a command at build time?',
+    options: ['CMD', 'RUN', 'ENTRYPOINT', 'EXPOSE'],
+    answer: 1,
+  },
+  {
+    q: 'What is the time complexity of a binary search on a sorted array?',
+    options: ['O(n)', 'O(n log n)', 'O(log n)', 'O(1)'],
+    answer: 2,
+  },
+  {
+    q: 'In Kubernetes, what is the smallest deployable unit?',
+    options: ['Node', 'Pod', 'Container', 'Deployment'],
+    answer: 1,
+  },
+  {
+    q: 'Which SQL clause filters rows AFTER aggregation (GROUP BY)?',
+    options: ['WHERE', 'HAVING', 'ORDER BY', 'LIMIT'],
+    answer: 1,
+  },
+  {
+    q: 'In Git, which command moves commits from one branch onto another, rewriting history?',
+    options: ['git merge', 'git rebase', 'git cherry-pick', 'git reset'],
+    answer: 1,
   },
 ];
 
@@ -303,5 +292,6 @@ const MEMORY_ICONS = ['🐳', '🚀', '⚙️', '🐧', '☁️', '🔑', '🧩'
 
 /* Expose to other scripts */
 window.PORTFOLIO_DATA = {
-  HERO, ABOUT, SKILLS, EXPERIENCE, EDUCATION, PROJECTS, TESTIMONIALS, MEMORY_ICONS,
+  TYPED_ROLES, ABOUT_CHIPS, ABOUT_CARDS, FUN_FACTS, SKILLS,
+  EXPERIENCE, EDUCATION, PROJECTS, TESTIMONIALS, QUIZ, MEMORY_ICONS,
 };

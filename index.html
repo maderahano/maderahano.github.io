@@ -2,44 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--==================== SEO ====================-->
-    <title>Made Rahano — Backend Infrastructure Engineer</title>
-    <meta name="description" content="Made Rahano is a Backend Infrastructure Engineer building and automating the systems behind backend services — Java, Go and Python on AWS with Terraform, Kubernetes and CI/CD. Experience, projects and contact.">
+    <title>Made Rahano — Software Engineer · Backend & Infrastructure</title>
+    <meta name="description" content="Made Rahano is a Software Engineer specializing in backend development, DevOps, and cloud infrastructure with Go, Java, Python, AWS, and Kubernetes. Explore projects, experience, and more.">
     <meta name="author" content="Made Rahano Satryani Widhi">
-    <meta name="keywords" content="Made Rahano, Software Engineer, Backend Engineer, Infrastructure Engineer, DevOps, Cloud, Go, Java, Python, AWS, Terraform, Kubernetes, Portfolio">
-    <meta name="theme-color" content="#0B1120">
+    <meta name="keywords" content="Made Rahano, Software Engineer, Backend Developer, DevOps, Cloud, Go, Java, Python, AWS, Kubernetes, Portfolio">
+    <meta name="theme-color" content="#0F172A">
     <link rel="canonical" href="https://maderahano.github.io/">
 
     <!--==================== OPEN GRAPH / TWITTER ====================-->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Made Rahano — Backend Infrastructure Engineer">
-    <meta property="og:description" content="I build and automate the infrastructure behind backend systems. Java · Go · Python · AWS · Terraform · Kubernetes.">
+    <meta property="og:title" content="Made Rahano — Software Engineer">
+    <meta property="og:description" content="Backend & Infrastructure engineer. Go · Java · Python · AWS · Kubernetes. Projects, experience, mini-games and more.">
     <meta property="og:url" content="https://maderahano.github.io/">
     <meta property="og:image" content="https://maderahano.github.io/assets/img/profile.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Made Rahano — Backend Infrastructure Engineer">
-    <meta name="twitter:description" content="I build and automate the infrastructure behind backend systems. Java · Go · Python · AWS · Terraform · Kubernetes.">
+    <meta name="twitter:title" content="Made Rahano — Software Engineer">
+    <meta name="twitter:description" content="Backend & Infrastructure engineer. Go · Java · Python · AWS · Kubernetes.">
     <meta name="twitter:image" content="https://maderahano.github.io/assets/img/profile.jpg">
 
     <!--==================== FAVICON ====================-->
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
     <link rel="apple-touch-icon" href="assets/img/favicon.svg">
 
-    <!--==================== THEME (before paint, avoids flash) ====================-->
-    <script>
-      try { if (JSON.parse(localStorage.getItem('theme')) === 'light') document.documentElement.classList.add('light'); } catch (e) {}
-    </script>
-
     <!--==================== FONTS ====================-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!--==================== ICONS (Unicons UI; tech logos are individual Devicon SVGs, see main.js) ====================-->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!--==================== ICONS (Unicons UI + Devicon tech logos) ====================-->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
 
     <!--==================== STYLES ====================-->
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -50,314 +46,337 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Made Rahano Satryani Widhi",
-      "alternateName": "Made Rahano",
-      "jobTitle": "Backend Infrastructure Engineer",
-      "worksFor": { "@type": "Organization", "name": "Traveloka" },
-      "address": { "@type": "PostalAddress", "addressLocality": "Jakarta", "addressCountry": "ID" },
-      "email": "mailto:maderahano@gmail.com",
+      "alternateName": "Anok",
+      "jobTitle": "Software Engineer",
       "url": "https://maderahano.github.io/",
-      "image": "https://maderahano.github.io/assets/img/profile.jpg",
       "sameAs": [
         "https://github.com/maderahano",
         "https://www.linkedin.com/in/maderahano/",
         "https://www.instagram.com/md.rahano/"
       ],
-      "knowsAbout": ["Backend Development", "Infrastructure", "DevOps", "Cloud Infrastructure", "Java", "Go", "Python", "AWS", "Terraform", "Kubernetes", "PostgreSQL"]
+      "knowsAbout": ["Backend Development", "DevOps", "Cloud Infrastructure", "Go", "Java", "Kubernetes", "AWS"]
     }
     </script>
 </head>
 <body>
-    <a href="#main" class="skip-link">Skip to content</a>
-    <div id="scroll-progress" aria-hidden="true"></div>
+    <!--==================== LOADER ====================-->
+    <div id="loader">
+        <div class="loader__logo">&lt;MR/&gt;</div>
+        <div class="loader__bar"><span></span></div>
+        <div class="loader__text">Loading portfolio…</div>
+    </div>
+
+    <!--==================== SCROLL PROGRESS + CURSOR + PARTICLES ====================-->
+    <div id="scroll-progress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <canvas id="particles"></canvas>
 
     <!--==================== HEADER ====================-->
     <header class="header" id="header">
-        <div class="nav__backdrop" id="nav-backdrop" aria-hidden="true"></div>
-        <nav class="nav container" aria-label="Primary">
-            <a href="#home" class="nav__logo" aria-label="Made Rahano — home">
-                <span class="nav__logo-mark" aria-hidden="true">MR</span>
-                <span class="nav__logo-text">maderahano<span class="nav__logo-dim">.github.io</span></span>
-            </a>
+        <nav class="nav container">
+            <a href="#home" class="nav__logo">&lt;<span>Made</span>Rahano<span class="dot">/&gt;</span></a>
 
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li><a href="#about" class="nav__link">About</a></li>
-                    <li><a href="#experience" class="nav__link">Experience</a></li>
-                    <li><a href="#projects" class="nav__link">Projects</a></li>
-                    <li><a href="#skills" class="nav__link">Skills</a></li>
-                    <li><a href="#education" class="nav__link">Education</a></li>
-                    <li><a href="#testimonials" class="nav__link">Testimonials</a></li>
-                    <li><a href="#games" class="nav__link">Mini Games</a></li>
-                    <li><a href="#contact" class="nav__link">Contact</a></li>
+                    <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="#experience" class="nav__link">Experience</a></li>
+                    <li class="nav__item"><a href="#education" class="nav__link">Education</a></li>
+                    <li class="nav__item"><a href="#portfolio" class="nav__link">Portfolio</a></li>
+                    <li class="nav__item"><a href="#testimonial" class="nav__link">Testimonials</a></li>
+                    <li class="nav__item"><a href="#games" class="nav__link">Mini Games</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
                 </ul>
-                <div class="nav__menu-footer">
-                    <a href="mailto:maderahano@gmail.com" class="button button--sm">Email me <i class="uil uil-arrow-up-right" aria-hidden="true"></i></a>
-                </div>
-                <button type="button" class="nav__close icon-button" id="nav-close" aria-label="Close menu"><i class="uil uil-times" aria-hidden="true"></i></button>
+                <i class="uil uil-times nav__close" id="nav-close" aria-label="Close menu"></i>
             </div>
 
-            <div class="nav__actions">
-                <a href="#contact" class="button button--sm nav__cta">Get in touch</a>
-                <button type="button" class="icon-button" id="theme-button" aria-label="Switch to light theme" aria-pressed="false">
-                    <i class="uil uil-moon" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="icon-button nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-                    <i class="uil uil-bars" aria-hidden="true"></i>
-                </button>
+            <div class="nav__btns">
+                <span class="egg-counter" id="egg-counter" title="Hidden easter eggs found">
+                    <i class="uil uil-bug"></i> <span id="egg-count">0</span>/5
+                </span>
+                <i class="uil uil-moon change-theme" id="theme-button" role="button" aria-label="Toggle theme" tabindex="0"></i>
+                <div class="nav__toggle" id="nav-toggle" role="button" aria-label="Open menu" tabindex="0">
+                    <i class="uil uil-apps"></i>
+                </div>
             </div>
         </nav>
     </header>
+    <div class="nav__backdrop" id="nav-backdrop"></div>
 
-    <main class="main" id="main">
+    <main class="main">
         <!--==================== HOME ====================-->
-        <section class="home" id="home" aria-labelledby="home-title">
+        <section class="home section" id="home">
             <div class="home__container container">
-                <div class="home__data">
-                    <p class="home__eyebrow reveal">
-                        <span class="status-dot" aria-hidden="true"></span>
-                        <span id="hero-role">Backend Infrastructure Engineer</span>
-                        <span class="home__eyebrow-org"><span class="home__eyebrow-sep" aria-hidden="true">· </span><span id="hero-company">Traveloka</span></span>
+                <div class="home__data reveal-l">
+                    <span class="home__greeting"><i class="uil uil-corner-down-right-alt"></i> Hello, I'm</span>
+                    <h1 class="home__title">Made <span class="text-grad">Rahano</span></h1>
+                    <div class="home__typed-wrap">I'm a <span class="home__typed" id="typed"></span><span class="cursor-blink">|</span></div>
+                    <p class="home__description">
+                        Passionate about building scalable systems, automating infrastructure,
+                        and solving complex problems with clean, efficient code. Backend, DevOps &amp; cloud are my playground.
                     </p>
-                    <h1 class="home__title reveal" id="home-title" data-delay="1">
-                        <span class="home__name">Made Rahano.</span>
-                        <span class="home__headline" id="hero-headline">I build and automate the infrastructure behind backend systems.</span>
-                    </h1>
-                    <p class="home__description reveal" id="hero-intro" data-delay="2"></p>
-                    <div class="home__buttons reveal" data-delay="3">
-                        <a href="#projects" class="button">View projects <i class="uil uil-arrow-down" aria-hidden="true"></i></a>
-                        <a href="assets/pdf/Made-Rahano-CV.pdf" class="button button--outline" id="hero-resume" download>Download résumé <i class="uil uil-import" aria-hidden="true"></i></a>
+                    <div class="home__buttons">
+                        <a href="assets/pdf/Made-Rahano-CV.pdf" download class="button">
+                            Download Resume <i class="uil uil-import"></i>
+                        </a>
+                        <a href="#portfolio" class="button button--outline">
+                            View Portfolio <i class="uil uil-apps"></i>
+                        </a>
+                        <a href="#contact" class="button button--ghost">
+                            Contact Me <i class="uil uil-message"></i>
+                        </a>
                     </div>
-                    <div class="home__meta reveal" data-delay="4">
-                        <ul class="home__social" id="hero-social" aria-label="Social links"></ul>
-                        <span class="home__location"><i class="uil uil-map-marker" aria-hidden="true"></i> <span id="hero-location">Jakarta, Indonesia</span></span>
+                    <div class="home__social">
+                        <a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener" class="home__social-icon" aria-label="LinkedIn"><i class="uil uil-linkedin-alt"></i></a>
+                        <a href="https://github.com/maderahano" target="_blank" rel="noopener" class="home__social-icon" aria-label="GitHub"><i class="uil uil-github-alt"></i></a>
+                        <a href="https://www.instagram.com/md.rahano/" target="_blank" rel="noopener" class="home__social-icon" aria-label="Instagram"><i class="uil uil-instagram"></i></a>
                     </div>
                 </div>
 
-                <!-- System card: identity + real delivery pipeline -->
-                <aside class="home__card reveal" data-delay="2" aria-label="Profile summary">
-                    <div class="syscard">
-                        <div class="syscard__bar" aria-hidden="true">
-                            <span></span><span></span><span></span>
-                            <code class="syscard__path">~/maderahano</code>
-                        </div>
-                        <div class="syscard__head">
-                            <img src="assets/img/profile.jpg" alt="Portrait of Made Rahano" class="syscard__avatar" width="72" height="72" fetchpriority="high" decoding="async">
-                            <div class="syscard__id">
-                                <span class="syscard__name" id="card-name">Made Rahano</span>
-                                <span class="syscard__role"><span id="card-role">Backend Infrastructure Engineer</span> @ <span id="card-company">Traveloka</span></span>
-                            </div>
-                            <span class="syscard__status" id="card-status" title="Currently employed">active</span>
-                        </div>
-                        <dl class="syscard__facts" id="card-facts"></dl>
-                        <div class="syscard__pipeline" id="card-pipeline" aria-label="Delivery pipeline: code, CI/CD, infrastructure as code, cloud"></div>
-                    </div>
-                </aside>
+                <div class="home__img-wrap reveal-r">
+                    <div class="home__blob"></div>
+                    <img src="assets/img/profile.jpg" alt="Made Rahano" class="home__photo" width="330" height="330">
+                    <span class="home__badge home__badge--1 glass"><i class="uil uil-server"></i> Backend</span>
+                    <span class="home__badge home__badge--2 glass"><i class="uil uil-cloud"></i> Cloud / DevOps</span>
+                </div>
             </div>
+            <a href="#about" class="home__scroll"><span>Scroll</span><i class="uil uil-mouse-alt"></i></a>
         </section>
 
         <!--==================== ABOUT ====================-->
-        <section class="section about" id="about" aria-labelledby="about-title">
+        <section class="about section" id="about">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">01</span>
-                    <h2 class="section__title" id="about-title">About</h2>
-                    <p class="section__lead">Who I am and how I like to work.</p>
-                </header>
+                <h2 class="section__title reveal">About Me</h2>
+                <span class="section__subtitle reveal">my_introduction</span>
 
-                <div class="about__grid">
-                    <figure class="about__figure reveal" data-delay="1">
-                        <img src="assets/img/about.jpg" alt="Made Rahano standing in front of the Traveloka bird logo wall" class="about__img" width="700" height="700" loading="lazy" decoding="async">
-                        <figcaption class="about__caption"><i class="uil uil-map-marker" aria-hidden="true"></i> Traveloka office, South Tangerang</figcaption>
-                    </figure>
+                <div class="about__container">
+                    <div class="about__img-wrap reveal-l">
+                        <img src="assets/img/about.jpg" alt="Made Rahano at work" class="about__img" width="500" height="500">
+                    </div>
 
-                    <div class="about__body reveal" data-delay="2">
-                        <div class="about__text" id="about-text"></div>
-                        <ul class="chip-list" id="about-chips" aria-label="Primary technologies"></ul>
-                        <dl class="about__stats" id="about-stats"></dl>
-                        <ul class="about__cards" id="about-cards"></ul>
+                    <div class="about__data reveal-r">
+                        <p class="about__description">
+                            I'm a <strong>Software Engineer</strong> with 3+ years of experience specializing in
+                            backend development, DevOps practices, and cloud infrastructure. I thrive on building robust,
+                            scalable systems and automating complex workflows. My core expertise lives in
+                            <strong>Go, Java and Python</strong>, complemented by hands-on cloud and infrastructure-as-code work.
+                        </p>
+                        <p class="about__description">
+                            My goal is to design systems that are reliable, observable and easy to evolve — and to keep
+                            the developer experience around them sharp. I'm continuously exploring distributed systems,
+                            Kubernetes and how AI/ML fits into production.
+                        </p>
+
+                        <div class="about__highlights" id="about-chips"></div>
+
+                        <div class="about__info glass">
+                            <div class="about__info-item">
+                                <span class="about__info-title" data-count="3">0</span>
+                                <span class="about__info-name">Years<br>Experience</span>
+                            </div>
+                            <div class="about__info-item">
+                                <span class="about__info-title" data-count="10" data-suffix="+">0</span>
+                                <span class="about__info-name">Projects<br>Shipped</span>
+                            </div>
+                            <div class="about__info-item">
+                                <span class="about__info-title" data-count="4">0</span>
+                                <span class="about__info-name">Companies<br>Worked</span>
+                            </div>
+                        </div>
+
+                        <div class="about__cards" id="about-cards"></div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!--==================== EXPERIENCE ====================-->
-        <section class="section experience" id="experience" aria-labelledby="experience-title">
-            <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">02</span>
-                    <h2 class="section__title" id="experience-title">Experience</h2>
-                    <p class="section__lead">Three years across backend and infrastructure teams — from cost-optimizing AWS as an intern to owning CI/CD and platform upgrades today.</p>
-                </header>
-                <ol class="timeline" id="experience-timeline"></ol>
-            </div>
-        </section>
-
-        <!--==================== PROJECTS ====================-->
-        <section class="section projects" id="projects" aria-labelledby="projects-title">
-            <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">03</span>
-                    <h2 class="section__title" id="projects-title">Projects</h2>
-                    <p class="section__lead">Selected work, framed the way I think about it: what was wrong, how it was approached, and what changed.</p>
-                </header>
-                <div class="case-list" id="projects-featured"></div>
-                <h3 class="projects__more-title reveal">More projects</h3>
-                <ul class="project-grid" id="projects-grid"></ul>
             </div>
         </section>
 
         <!--==================== SKILLS ====================-->
-        <section class="section skills" id="skills" aria-labelledby="skills-title">
+        <section class="skills section" id="skills">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">04</span>
-                    <h2 class="section__title" id="skills-title">Skills</h2>
-                    <p class="section__lead">The tools I reach for, grouped by where they sit in the stack.</p>
-                </header>
-                <div class="skills__grid" id="skills-container"></div>
+                <h2 class="section__title reveal">Skills</h2>
+                <span class="section__subtitle reveal">what_i_work_with</span>
+                <div class="skills__container" id="skills-container"></div>
+            </div>
+        </section>
+
+        <!--==================== EXPERIENCE ====================-->
+        <section class="experience section" id="experience">
+            <div class="container">
+                <h2 class="section__title reveal">Work Experience</h2>
+                <span class="section__subtitle reveal">professional_journey</span>
+                <div class="timeline" id="experience-timeline"></div>
             </div>
         </section>
 
         <!--==================== EDUCATION ====================-->
-        <section class="section education" id="education" aria-labelledby="education-title">
+        <section class="education section" id="education">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">05</span>
-                    <h2 class="section__title" id="education-title">Education</h2>
-                </header>
-                <ol class="timeline timeline--compact" id="education-timeline"></ol>
+                <h2 class="section__title reveal">Education</h2>
+                <span class="section__subtitle reveal">academic_background</span>
+                <div class="timeline" id="education-timeline"></div>
+            </div>
+        </section>
+
+        <!--==================== PORTFOLIO ====================-->
+        <section class="portfolio section" id="portfolio">
+            <div class="container">
+                <h2 class="section__title reveal">Portfolio</h2>
+                <span class="section__subtitle reveal">selected_work</span>
+                <div class="portfolio__filters reveal" id="portfolio-filters"></div>
+                <div class="portfolio__grid" id="portfolio-grid"></div>
             </div>
         </section>
 
         <!--==================== TESTIMONIALS ====================-->
-        <section class="section testimonials" id="testimonials" aria-labelledby="testimonials-title">
+        <section class="testimonial section" id="testimonial">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">06</span>
-                    <h2 class="section__title" id="testimonials-title">What colleagues say</h2>
-                </header>
-                <ul class="quote-grid" id="testimonial-grid"></ul>
+                <h2 class="section__title reveal">Testimonials</h2>
+                <span class="section__subtitle reveal">what_people_say</span>
+
+                <div class="testimonial__carousel reveal glass">
+                    <div class="testimonial__track" id="testimonial-track"></div>
+                </div>
+                <div class="testimonial__nav reveal">
+                    <button class="testimonial__arrow" id="t-prev" aria-label="Previous"><i class="uil uil-angle-left"></i></button>
+                    <div class="testimonial__dots" id="testimonial-dots"></div>
+                    <button class="testimonial__arrow" id="t-next" aria-label="Next"><i class="uil uil-angle-right"></i></button>
+                </div>
             </div>
         </section>
 
         <!--==================== MINI GAMES ====================-->
-        <section class="section games" id="games" aria-labelledby="games-title">
+        <section class="game section" id="games">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">07</span>
-                    <h2 class="section__title" id="games-title">Mini games</h2>
-                    <p class="section__lead">Small canvas games I built for fun, in plain JavaScript. High scores are stored locally.</p>
-                    <span class="egg-counter" id="egg-counter" title="Hidden easter eggs found across the site"><i class="uil uil-bug" aria-hidden="true"></i> <span id="egg-count">0</span>/5 easter eggs found</span>
-                </header>
+                <h2 class="section__title reveal">Mini Games</h2>
+                <span class="section__subtitle reveal">take_a_break</span>
 
-                <div class="games__panel-wrap reveal">
-                    <div class="games__tabs" role="tablist" aria-label="Choose a game">
-                        <button type="button" class="games__tab" role="tab" id="tab-snake" aria-selected="true" aria-controls="game-snake" data-game="snake"><i class="uil uil-record-audio" aria-hidden="true"></i> Snake</button>
-                        <button type="button" class="games__tab" role="tab" id="tab-memory" aria-selected="false" aria-controls="game-memory" data-game="memory" tabindex="-1"><i class="uil uil-layer-group" aria-hidden="true"></i> Memory Match</button>
-                        <button type="button" class="games__tab" role="tab" id="tab-dino" aria-selected="false" aria-controls="game-dino" data-game="dino" tabindex="-1"><i class="uil uil-game-structure" aria-hidden="true"></i> Cube Run</button>
-                    </div>
+                <div class="games__tabs reveal">
+                    <button class="games__tab active" data-game="snake"><i class="uil uil-record-audio"></i> Snake</button>
+                    <button class="games__tab" data-game="memory"><i class="uil uil-layer-group"></i> Memory Match</button>
+                    <button class="games__tab" data-game="dino"><i class="uil uil-game-structure"></i> Cube Run</button>
+                </div>
 
-                    <!-- SNAKE -->
-                    <div class="games__panel active" id="game-snake" role="tabpanel" aria-labelledby="tab-snake">
-                        <div class="games__head">
-                            <div class="games__stats">
-                                <span class="games__stat">Score <strong id="snake-score">0</strong></span>
-                                <span class="games__stat">Best <strong id="snake-best">0</strong></span>
-                            </div>
-                            <button type="button" class="button button--ghost button--sm" id="snake-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                <!-- SNAKE -->
+                <div class="games__panel glass active" id="game-snake">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Score <strong id="snake-score">0</strong></span>
+                            <span class="games__stat">Best <strong id="snake-best">0</strong></span>
                         </div>
-                        <canvas id="snake-canvas" width="400" height="400" tabindex="0" role="img" aria-label="Snake game board — click or focus, then steer with the arrow keys"></canvas>
-                        <p class="games__hint">Click the board, then use arrow keys / WASD — or the buttons on touch devices.</p>
-                        <div class="snake__dpad">
-                            <button type="button" class="up" data-dir="up" aria-label="Up"><i class="uil uil-angle-up" aria-hidden="true"></i></button>
-                            <button type="button" class="left" data-dir="left" aria-label="Left"><i class="uil uil-angle-left" aria-hidden="true"></i></button>
-                            <button type="button" class="down" data-dir="down" aria-label="Down"><i class="uil uil-angle-down" aria-hidden="true"></i></button>
-                            <button type="button" class="right" data-dir="right" aria-label="Right"><i class="uil uil-angle-right" aria-hidden="true"></i></button>
-                        </div>
+                        <button class="button button--ghost" id="snake-restart"><i class="uil uil-redo"></i> Restart</button>
                     </div>
+                    <canvas id="snake-canvas" width="400" height="400"></canvas>
+                    <p class="snake__hint">Use arrow keys / WASD — or the buttons on touch devices.</p>
+                    <div class="snake__dpad">
+                        <button class="up" data-dir="up" aria-label="Up"><i class="uil uil-angle-up"></i></button>
+                        <button class="left" data-dir="left" aria-label="Left"><i class="uil uil-angle-left"></i></button>
+                        <button class="down" data-dir="down" aria-label="Down"><i class="uil uil-angle-down"></i></button>
+                        <button class="right" data-dir="right" aria-label="Right"><i class="uil uil-angle-right"></i></button>
+                    </div>
+                </div>
 
-                    <!-- MEMORY -->
-                    <div class="games__panel" id="game-memory" role="tabpanel" aria-labelledby="tab-memory" hidden>
-                        <div class="games__head">
-                            <div class="games__stats">
-                                <span class="games__stat">Moves <strong id="memory-moves">0</strong></span>
-                                <span class="games__stat">Matches <strong id="memory-matches">0</strong>/8</span>
-                                <span class="games__stat">Time <strong id="memory-time">0s</strong></span>
-                                <span class="games__stat">Best <strong id="memory-best">—</strong></span>
-                            </div>
-                            <button type="button" class="button button--ghost button--sm" id="memory-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                <!-- MEMORY -->
+                <div class="games__panel glass" id="game-memory">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Moves <strong id="memory-moves">0</strong></span>
+                            <span class="games__stat">Matches <strong id="memory-matches">0</strong>/8</span>
+                            <span class="games__stat">Time <strong id="memory-time">0s</strong></span>
+                            <span class="games__stat">Best <strong id="memory-best">—</strong></span>
                         </div>
-                        <div class="memory__board" id="memory-board"></div>
+                        <button class="button button--ghost" id="memory-restart"><i class="uil uil-redo"></i> Restart</button>
                     </div>
+                    <div class="memory__board" id="memory-board"></div>
+                </div>
 
-                    <!-- CUBE RUN -->
-                    <div class="games__panel" id="game-dino" role="tabpanel" aria-labelledby="tab-dino" hidden>
-                        <div class="games__head">
-                            <div class="games__stats">
-                                <span class="games__stat">Score <strong id="dino-score">0</strong></span>
-                                <span class="games__stat">Best <strong id="dino-best">0</strong></span>
-                            </div>
-                            <button type="button" class="button button--ghost button--sm" id="dino-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                <!-- CUBE RUN -->
+                <div class="games__panel glass" id="game-dino">
+                    <div class="games__head">
+                        <div class="games__stats">
+                            <span class="games__stat">Score <strong id="dino-score">0</strong></span>
+                            <span class="games__stat">Best <strong id="dino-best">0</strong></span>
                         </div>
-                        <canvas id="dino-canvas" width="600" height="200" tabindex="0" role="img" aria-label="Cube Run game — click or focus, then press Space to jump"></canvas>
-                        <p class="games__hint">Click the canvas, then Space / ↑ to jump · ↓ to duck — or tap on touch devices.</p>
+                        <button class="button button--ghost" id="dino-restart"><i class="uil uil-redo"></i> Restart</button>
                     </div>
+                    <canvas id="dino-canvas" width="600" height="200"></canvas>
+                    <p class="dino__hint">Press Space / ↑ to jump · ↓ to duck — or tap the canvas on touch devices.</p>
                 </div>
             </div>
         </section>
 
         <!--==================== CONTACT ====================-->
-        <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <section class="contact section" id="contact">
             <div class="container">
-                <header class="section__head reveal">
-                    <span class="section__num">08</span>
-                    <h2 class="section__title" id="contact-title">Let's build something</h2>
-                    <p class="section__lead">Open to backend and infrastructure roles, interesting problems, or just a chat about systems. My inbox is always open.</p>
-                </header>
+                <h2 class="section__title reveal">Contact Me</h2>
+                <span class="section__subtitle reveal">let's_build_something</span>
 
-                <div class="contact__grid">
-                    <div class="contact__side reveal" data-delay="1">
-                        <a class="contact__primary" href="mailto:maderahano@gmail.com">
-                            <span class="contact__primary-label">Email</span>
-                            <span class="contact__primary-value">maderahano@gmail.com</span>
-                            <i class="uil uil-arrow-up-right" aria-hidden="true"></i>
-                        </a>
-                        <ul class="contact__links">
-                            <li><a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener"><i class="uil uil-linkedin-alt" aria-hidden="true"></i><span>LinkedIn</span><small>in/maderahano</small></a></li>
-                            <li><a href="https://github.com/maderahano" target="_blank" rel="noopener"><i class="uil uil-github-alt" aria-hidden="true"></i><span>GitHub</span><small>@maderahano</small></a></li>
-                            <li><a href="assets/pdf/Made-Rahano-CV.pdf" download><i class="uil uil-file-alt" aria-hidden="true"></i><span>Résumé</span><small>PDF</small></a></li>
-                            <li class="contact__links-static"><i class="uil uil-map-marker" aria-hidden="true"></i><span>Jakarta, Indonesia</span><small>UTC+7</small></li>
-                        </ul>
+                <div class="contact__container">
+                    <div class="reveal-l">
+                        <p class="contact__intro">
+                            Have a role, a project, or just want to say hi? My inbox is always open —
+                            I'll do my best to get back to you.
+                        </p>
+                        <div class="contact__info">
+                            <a class="contact__card glass" href="mailto:maderahano@gmail.com">
+                                <span class="contact__icon"><i class="uil uil-envelope"></i></span>
+                                <span><span class="contact__card-title">Email</span><br><span class="contact__card-data">maderahano@gmail.com</span></span>
+                            </a>
+                            <div class="contact__card glass">
+                                <span class="contact__icon"><i class="uil uil-map-marker"></i></span>
+                                <span><span class="contact__card-title">Location</span><br><span class="contact__card-data">Jakarta, Indonesia</span></span>
+                            </div>
+                            <a class="contact__card glass" href="https://github.com/maderahano" target="_blank" rel="noopener">
+                                <span class="contact__icon"><i class="uil uil-github-alt"></i></span>
+                                <span><span class="contact__card-title">GitHub</span><br><span class="contact__card-data">@maderahano</span></span>
+                            </a>
+                            <a class="contact__card glass" href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener">
+                                <span class="contact__icon"><i class="uil uil-linkedin-alt"></i></span>
+                                <span><span class="contact__card-title">LinkedIn</span><br><span class="contact__card-data">in/maderahano</span></span>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Static contact form.
                          Default: opens the visitor's email client via mailto (no backend needed).
-                         With data-formspree set, submissions are POSTed to Formspree instead. -->
-                    <form class="contact__form reveal" id="contact-form" data-delay="2" data-formspree="https://formspree.io/f/xzdlepqd" novalidate>
-                        <div class="contact__row">
-                            <div class="field">
-                                <label for="cf-name">Name</label>
-                                <input type="text" id="cf-name" name="name" autocomplete="name" required>
+                         To use Formspree instead: set data-formspree="https://formspree.io/f/XXXX" on the form. -->
+                    <form class="contact__form glass reveal-r" id="contact-form" data-formspree="https://formspree.io/f/xzdlepqd">
+                        <div class="contact__form-row">
+                            <div class="contact__field">
+                                <input type="text" name="name" placeholder="Your Name" class="contact__input" required>
                             </div>
-                            <div class="field">
-                                <label for="cf-email">Email</label>
-                                <input type="email" id="cf-email" name="email" autocomplete="email" required>
+                            <div class="contact__field">
+                                <input type="email" name="email" placeholder="Your Email" class="contact__input" required>
                             </div>
                         </div>
-                        <div class="field">
-                            <label for="cf-subject">Subject <span class="field__opt">optional</span></label>
-                            <input type="text" id="cf-subject" name="subject">
+                        <div class="contact__field">
+                            <input type="text" name="subject" placeholder="Subject" class="contact__input">
                         </div>
-                        <div class="field">
-                            <label for="cf-message">Message</label>
-                            <textarea id="cf-message" name="message" rows="6" required></textarea>
+                        <div class="contact__field">
+                            <textarea name="message" placeholder="Your Message" rows="6" class="contact__input" required></textarea>
                         </div>
-                        <div class="contact__form-foot">
-                            <p class="contact__form-note" id="cf-status" aria-live="polite"></p>
-                            <button type="submit" class="button">Send message <i class="uil uil-message" aria-hidden="true"></i></button>
-                        </div>
+                        <button type="submit" class="button">Send Message <i class="uil uil-message"></i></button>
                     </form>
                 </div>
+
+                <!--==================== GITHUB-STYLE HEATMAP (mock data) ====================-->
+                <!-- <div class="heatmap glass reveal" id="heatmap">
+                    <div class="heatmap__head">
+                        <h4><i class="uil uil-chart"></i> Coding Activity</h4>
+                        <span class="heatmap__total" id="heatmap-total"></span>
+                    </div>
+                    <div class="heatmap__grid" id="heatmap-grid"></div>
+                    <div class="heatmap__legend">
+                        Less
+                        <i style="background:var(--surface-2)"></i>
+                        <i style="background:rgba(34,197,94,0.3)"></i>
+                        <i style="background:rgba(34,197,94,0.5)"></i>
+                        <i style="background:rgba(34,197,94,0.75)"></i>
+                        <i style="background:var(--green)"></i>
+                        More
+                    </div>
+                </div> -->
             </div>
         </section>
     </main>
@@ -365,50 +384,61 @@
     <!--==================== FOOTER ====================-->
     <footer class="footer">
         <div class="container">
-            <div class="footer__top">
-                <div class="footer__brand">
-                    <a href="#home" class="nav__logo" aria-label="Back to top">
-                        <span class="nav__logo-mark" aria-hidden="true">MR</span>
-                        <span class="nav__logo-text">Made Rahano</span>
-                    </a>
-                    <p class="footer__tag">Backend Infrastructure Engineer · Jakarta, Indonesia</p>
+            <div class="footer__content">
+                <div>
+                    <h3 class="footer__title">&lt;<span>Made</span>Rahano/&gt;</h3>
+                    <span class="footer__subtitle">Software Engineer · Backend &amp; Infrastructure</span>
                 </div>
-                <nav class="footer__nav" aria-label="Footer">
-                    <ul>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#games">Mini Games</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-                <ul class="footer__social" id="footer-social" aria-label="Social links"></ul>
+                <ul class="footer__links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#games">Mini Games</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="footer__socials">
+                    <a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="uil uil-linkedin-alt"></i></a>
+                    <a href="https://github.com/maderahano" target="_blank" rel="noopener" aria-label="GitHub"><i class="uil uil-github-alt"></i></a>
+                    <a href="https://www.instagram.com/md.rahano/" target="_blank" rel="noopener" aria-label="Instagram"><i class="uil uil-instagram"></i></a>
+                </div>
             </div>
-            <div class="footer__bottom">
-                <p>&copy; <span id="year"></span> Made Rahano. All rights reserved.</p>
-                <p class="footer__built">Built with plain HTML, CSS &amp; JavaScript — no framework, no build step.</p>
-            </div>
+            <p class="footer__copy">
+                &copy; <span id="year"></span> Made Rahano. Built with <i class="uil uil-heart"></i> &amp; vanilla JS. All rights reserved.
+            </p>
         </div>
     </footer>
 
+    <!--==================== PORTFOLIO MODAL ====================-->
+    <div class="modal" id="project-modal">
+        <div class="modal__content glass">
+            <span class="modal__close" id="modal-close" aria-label="Close"><i class="uil uil-times"></i></span>
+            <img src="" alt="" class="modal__img" id="modal-img">
+            <div class="modal__body">
+                <h3 class="modal__title" id="modal-title"></h3>
+                <p class="modal__desc" id="modal-desc"></p>
+                <div class="modal__tags" id="modal-tags"></div>
+                <div class="modal__actions" id="modal-actions"></div>
+            </div>
+        </div>
+    </div>
+
     <!--==================== ACHIEVEMENT POPUP + TOASTS ====================-->
-    <div class="achv" id="achv" role="status" aria-live="polite">
-        <span class="achv__icon" aria-hidden="true"><i class="uil uil-trophy"></i></span>
+    <div class="achv" id="achv">
+        <span class="achv__icon"><i class="uil uil-trophy"></i></span>
         <div>
-            <div class="achv__label">Achievement unlocked</div>
+            <div class="achv__label">ACHIEVEMENT UNLOCKED</div>
             <div class="achv__title" id="achv-title"></div>
             <div class="achv__sub" id="achv-sub"></div>
         </div>
     </div>
-    <div id="toast-wrap" role="status" aria-live="polite"></div>
+    <div id="toast-wrap"></div>
 
     <!--==================== BACK TO TOP ====================-->
-    <a href="#home" class="scrollup" id="scroll-up" aria-label="Back to top"><i class="uil uil-arrow-up" aria-hidden="true"></i></a>
+    <a href="#home" class="scrollup" id="scroll-up" aria-label="Back to top"><i class="uil uil-arrow-up scrollup__icon"></i></a>
 
     <!--==================== SCRIPTS ====================-->
-    <script src="assets/js/data.js" defer></script>
-    <script src="assets/js/games.js" defer></script>
-    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/games.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

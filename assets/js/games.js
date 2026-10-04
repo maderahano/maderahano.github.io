@@ -11,9 +11,6 @@
     get: (k, f) => { try { const v = localStorage.getItem(k); return v === null ? f : JSON.parse(v); } catch { return f; } },
     set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   };
-  /* Keyboard controls only apply while focus is inside the game panel,
-     so arrow keys / Space keep scrolling the page everywhere else. */
-  const hasGameFocus = (panelSel) => { const p = $(panelSel); return !!(p && p.contains(document.activeElement)); };
 
   /*======================== SNAKE ========================*/
   const Snake = (() => {
@@ -132,12 +129,11 @@
         W: [0, -1], S: [0, 1], A: [-1, 0], D: [1, 0],
       };
       document.addEventListener('keydown', (e) => {
-        if (!running || !hasGameFocus('#game-snake')) return;
+        if (!running) return;
         const k = keymap[e.key];
         if (k) { e.preventDefault(); setDir(k[0], k[1]); }
       });
-      canvas.addEventListener('pointerdown', () => canvas.focus());
-      $('#snake-restart').addEventListener('click', () => { reset(); draw(); canvas.focus(); });
+      $('#snake-restart').addEventListener('click', () => { reset(); draw(); });
       document.querySelectorAll('.snake__dpad button').forEach((b) => {
         b.addEventListener('click', () => {
           const m = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[b.dataset.dir];
@@ -391,7 +387,7 @@
     function stop() { running = false; }
 
     function onKey(e) {
-      if (!running || !hasGameFocus('#game-dino')) return;
+      if (!running) return;
       if (e.code === 'Space' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
         e.preventDefault();
         if (dead) { reset(); } else { jump(); }
@@ -411,8 +407,8 @@
       loopId = requestAnimationFrame(frame);
       document.addEventListener('keydown', onKey);
       document.addEventListener('keyup', onKeyUp);
-      canvas.addEventListener('pointerdown', () => { canvas.focus(); if (dead) reset(); else jump(); });
-      $('#dino-restart').addEventListener('click', () => { reset(); canvas.focus(); });
+      canvas.addEventListener('pointerdown', () => { if (dead) reset(); else jump(); });
+      $('#dino-restart').addEventListener('click', reset);
     }
 
     return { init, start, stop };
@@ -420,41 +416,25 @@
 
   /*======================== TAB SWITCHING ========================*/
   function initTabs() {
-    const tabs = Array.from(document.querySelectorAll('.games__tab'));
+    const tabs = document.querySelectorAll('.games__tab');
     const panels = { snake: $('#game-snake'), memory: $('#game-memory'), dino: $('#game-dino') };
     const mods = { snake: Snake, memory: Memory, dino: Dino };
     let inited = { snake: false, memory: false, dino: false };
     let current = 'snake';
-    if (!tabs.length) return;
 
     function ensure(name) { if (!inited[name]) { inited[name] = true; mods[name].init(); } }
 
-    function activate(name, focusTab) {
+    function activate(name) {
       current = name;
-      tabs.forEach((t) => {
-        const on = t.dataset.game === name;
-        t.setAttribute('aria-selected', String(on));
-        t.tabIndex = on ? 0 : -1;
-        if (on && focusTab) t.focus();
-      });
-      Object.entries(panels).forEach(([k, p]) => { if (p) { p.hidden = k !== name; p.classList.toggle('active', k === name); } });
+      tabs.forEach((t) => t.classList.toggle('active', t.dataset.game === name));
+      Object.entries(panels).forEach(([k, p]) => p && p.classList.toggle('active', k === name));
       Snake.stop(); Dino.stop();
       ensure(name);
       if (name === 'snake') Snake.start();
       if (name === 'dino') Dino.start();
     }
 
-    tabs.forEach((t, i) => {
-      t.addEventListener('click', () => activate(t.dataset.game));
-      // Roving tabindex: ← → Home End switch tabs per WAI-ARIA tabs pattern
-      t.addEventListener('keydown', (e) => {
-        const keys = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
-        if (!(e.key in keys)) return;
-        e.preventDefault();
-        const next = (keys[e.key] + tabs.length) % tabs.length;
-        activate(tabs[next].dataset.game, true);
-      });
-    });
+    tabs.forEach((t) => t.addEventListener('click', () => activate(t.dataset.game)));
 
     // Lazy-start: only run the active canvas game while the section is on-screen.
     const section = $('#games');
