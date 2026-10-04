@@ -1,60 +1,414 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--==================== SEO ====================-->
     <title>Made Rahano — Backend Infrastructure Engineer</title>
-    <meta
-      name="description"
-      content="Made Rahano Satryani Widhi — Backend Infrastructure Engineer at Traveloka. Java, Go, AWS, Terraform, Kubernetes, CI/CD. Interactive resume and portfolio."
-    />
-    <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#F6F8FB" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg" />
-    <link rel="canonical" href="https://maderahano.github.io/" />
+    <meta name="description" content="Made Rahano is a Backend Infrastructure Engineer building and automating the systems behind backend services — Java, Go and Python on AWS with Terraform, Kubernetes and CI/CD. Experience, projects and contact.">
+    <meta name="author" content="Made Rahano Satryani Widhi">
+    <meta name="keywords" content="Made Rahano, Software Engineer, Backend Engineer, Infrastructure Engineer, DevOps, Cloud, Go, Java, Python, AWS, Terraform, Kubernetes, Portfolio">
+    <meta name="theme-color" content="#0B1120">
+    <link rel="canonical" href="https://maderahano.github.io/">
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Made Rahano — Backend Infrastructure Engineer" />
-    <meta
-      property="og:description"
-      content="Backend & infrastructure engineer at Traveloka — Java, Go, AWS, Terraform, Kubernetes, CI/CD."
-    />
-    <meta property="og:url" content="https://maderahano.github.io/" />
-    <meta property="og:image" content="https://maderahano.github.io/assets/img/profile.jpg" />
-    <meta name="twitter:card" content="summary" />
+    <!--==================== OPEN GRAPH / TWITTER ====================-->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Made Rahano — Backend Infrastructure Engineer">
+    <meta property="og:description" content="I build and automate the infrastructure behind backend systems. Java · Go · Python · AWS · Terraform · Kubernetes.">
+    <meta property="og:url" content="https://maderahano.github.io/">
+    <meta property="og:image" content="https://maderahano.github.io/assets/img/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Made Rahano — Backend Infrastructure Engineer">
+    <meta name="twitter:description" content="I build and automate the infrastructure behind backend systems. Java · Go · Python · AWS · Terraform · Kubernetes.">
+    <meta name="twitter:image" content="https://maderahano.github.io/assets/img/profile.jpg">
 
-    <!-- Apply the stored theme before first paint to avoid a flash. Dark is the default. -->
+    <!--==================== FAVICON ====================-->
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+
+    <!--==================== THEME (before paint, avoids flash) ====================-->
     <script>
-      try {
-        var t = localStorage.getItem('theme');
-        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-      } catch (e) {}
+      try { if (JSON.parse(localStorage.getItem('theme')) === 'light') document.documentElement.classList.add('light'); } catch (e) {}
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!--==================== FONTS ====================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+    <!--==================== ICONS (Unicons UI; tech logos are individual Devicon SVGs, see main.js) ====================-->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!--==================== STYLES ====================-->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!--==================== STRUCTURED DATA ====================-->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Made Rahano Satryani Widhi",
-        "jobTitle": "Backend Infrastructure Engineer",
-        "worksFor": { "@type": "Organization", "name": "Traveloka" },
-        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Politeknik Elektronika Negeri Surabaya" },
-        "email": "mailto:maderahano@gmail.com",
-        "url": "https://maderahano.github.io/",
-        "image": "https://maderahano.github.io/assets/img/profile.jpg",
-        "sameAs": ["https://www.linkedin.com/in/maderahano/", "https://github.com/maderahano"]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Made Rahano Satryani Widhi",
+      "alternateName": "Made Rahano",
+      "jobTitle": "Backend Infrastructure Engineer",
+      "worksFor": { "@type": "Organization", "name": "Traveloka" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Jakarta", "addressCountry": "ID" },
+      "email": "mailto:maderahano@gmail.com",
+      "url": "https://maderahano.github.io/",
+      "image": "https://maderahano.github.io/assets/img/profile.jpg",
+      "sameAs": [
+        "https://github.com/maderahano",
+        "https://www.linkedin.com/in/maderahano/",
+        "https://www.instagram.com/md.rahano/"
+      ],
+      "knowsAbout": ["Backend Development", "Infrastructure", "DevOps", "Cloud Infrastructure", "Java", "Go", "Python", "AWS", "Terraform", "Kubernetes", "PostgreSQL"]
+    }
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <div class="nav__backdrop" id="nav-backdrop" aria-hidden="true"></div>
+        <nav class="nav container" aria-label="Primary">
+            <a href="#home" class="nav__logo" aria-label="Made Rahano — home">
+                <span class="nav__logo-mark" aria-hidden="true">MR</span>
+                <span class="nav__logo-text">maderahano<span class="nav__logo-dim">.github.io</span></span>
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li><a href="#about" class="nav__link">About</a></li>
+                    <li><a href="#experience" class="nav__link">Experience</a></li>
+                    <li><a href="#projects" class="nav__link">Projects</a></li>
+                    <li><a href="#skills" class="nav__link">Skills</a></li>
+                    <li><a href="#education" class="nav__link">Education</a></li>
+                    <li><a href="#testimonials" class="nav__link">Testimonials</a></li>
+                    <li><a href="#games" class="nav__link">Mini Games</a></li>
+                    <li><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+                <div class="nav__menu-footer">
+                    <a href="mailto:maderahano@gmail.com" class="button button--sm">Email me <i class="uil uil-arrow-up-right" aria-hidden="true"></i></a>
+                </div>
+                <button type="button" class="nav__close icon-button" id="nav-close" aria-label="Close menu"><i class="uil uil-times" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="nav__actions">
+                <a href="#contact" class="button button--sm nav__cta">Get in touch</a>
+                <button type="button" class="icon-button" id="theme-button" aria-label="Switch to light theme" aria-pressed="false">
+                    <i class="uil uil-moon" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="icon-button nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                    <i class="uil uil-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main" id="main">
+        <!--==================== HOME ====================-->
+        <section class="home" id="home" aria-labelledby="home-title">
+            <div class="home__container container">
+                <div class="home__data">
+                    <p class="home__eyebrow reveal">
+                        <span class="status-dot" aria-hidden="true"></span>
+                        <span id="hero-role">Backend Infrastructure Engineer</span>
+                        <span class="home__eyebrow-org"><span class="home__eyebrow-sep" aria-hidden="true">· </span><span id="hero-company">Traveloka</span></span>
+                    </p>
+                    <h1 class="home__title reveal" id="home-title" data-delay="1">
+                        <span class="home__name">Made Rahano.</span>
+                        <span class="home__headline" id="hero-headline">I build and automate the infrastructure behind backend systems.</span>
+                    </h1>
+                    <p class="home__description reveal" id="hero-intro" data-delay="2"></p>
+                    <div class="home__buttons reveal" data-delay="3">
+                        <a href="#projects" class="button">View projects <i class="uil uil-arrow-down" aria-hidden="true"></i></a>
+                        <a href="assets/pdf/Made-Rahano-CV.pdf" class="button button--outline" id="hero-resume" download>Download résumé <i class="uil uil-import" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="home__meta reveal" data-delay="4">
+                        <ul class="home__social" id="hero-social" aria-label="Social links"></ul>
+                        <span class="home__location"><i class="uil uil-map-marker" aria-hidden="true"></i> <span id="hero-location">Jakarta, Indonesia</span></span>
+                    </div>
+                </div>
+
+                <!-- System card: identity + real delivery pipeline -->
+                <aside class="home__card reveal" data-delay="2" aria-label="Profile summary">
+                    <div class="syscard">
+                        <div class="syscard__bar" aria-hidden="true">
+                            <span></span><span></span><span></span>
+                            <code class="syscard__path">~/maderahano</code>
+                        </div>
+                        <div class="syscard__head">
+                            <img src="assets/img/profile.jpg" alt="Portrait of Made Rahano" class="syscard__avatar" width="72" height="72" fetchpriority="high" decoding="async">
+                            <div class="syscard__id">
+                                <span class="syscard__name" id="card-name">Made Rahano</span>
+                                <span class="syscard__role"><span id="card-role">Backend Infrastructure Engineer</span> @ <span id="card-company">Traveloka</span></span>
+                            </div>
+                            <span class="syscard__status" id="card-status" title="Currently employed">active</span>
+                        </div>
+                        <dl class="syscard__facts" id="card-facts"></dl>
+                        <div class="syscard__pipeline" id="card-pipeline" aria-label="Delivery pipeline: code, CI/CD, infrastructure as code, cloud"></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!--==================== ABOUT ====================-->
+        <section class="section about" id="about" aria-labelledby="about-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">01</span>
+                    <h2 class="section__title" id="about-title">About</h2>
+                    <p class="section__lead">Who I am and how I like to work.</p>
+                </header>
+
+                <div class="about__grid">
+                    <figure class="about__figure reveal" data-delay="1">
+                        <img src="assets/img/about.jpg" alt="Made Rahano standing in front of the Traveloka bird logo wall" class="about__img" width="700" height="700" loading="lazy" decoding="async">
+                        <figcaption class="about__caption"><i class="uil uil-map-marker" aria-hidden="true"></i> Traveloka office, South Tangerang</figcaption>
+                    </figure>
+
+                    <div class="about__body reveal" data-delay="2">
+                        <div class="about__text" id="about-text"></div>
+                        <ul class="chip-list" id="about-chips" aria-label="Primary technologies"></ul>
+                        <dl class="about__stats" id="about-stats"></dl>
+                        <ul class="about__cards" id="about-cards"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--==================== EXPERIENCE ====================-->
+        <section class="section experience" id="experience" aria-labelledby="experience-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">02</span>
+                    <h2 class="section__title" id="experience-title">Experience</h2>
+                    <p class="section__lead">Three years across backend and infrastructure teams — from cost-optimizing AWS as an intern to owning CI/CD and platform upgrades today.</p>
+                </header>
+                <ol class="timeline" id="experience-timeline"></ol>
+            </div>
+        </section>
+
+        <!--==================== PROJECTS ====================-->
+        <section class="section projects" id="projects" aria-labelledby="projects-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">03</span>
+                    <h2 class="section__title" id="projects-title">Projects</h2>
+                    <p class="section__lead">Selected work, framed the way I think about it: what was wrong, how it was approached, and what changed.</p>
+                </header>
+                <div class="case-list" id="projects-featured"></div>
+                <h3 class="projects__more-title reveal">More projects</h3>
+                <ul class="project-grid" id="projects-grid"></ul>
+            </div>
+        </section>
+
+        <!--==================== SKILLS ====================-->
+        <section class="section skills" id="skills" aria-labelledby="skills-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">04</span>
+                    <h2 class="section__title" id="skills-title">Skills</h2>
+                    <p class="section__lead">The tools I reach for, grouped by where they sit in the stack.</p>
+                </header>
+                <div class="skills__grid" id="skills-container"></div>
+            </div>
+        </section>
+
+        <!--==================== EDUCATION ====================-->
+        <section class="section education" id="education" aria-labelledby="education-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">05</span>
+                    <h2 class="section__title" id="education-title">Education</h2>
+                </header>
+                <ol class="timeline timeline--compact" id="education-timeline"></ol>
+            </div>
+        </section>
+
+        <!--==================== TESTIMONIALS ====================-->
+        <section class="section testimonials" id="testimonials" aria-labelledby="testimonials-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">06</span>
+                    <h2 class="section__title" id="testimonials-title">What colleagues say</h2>
+                </header>
+                <ul class="quote-grid" id="testimonial-grid"></ul>
+            </div>
+        </section>
+
+        <!--==================== MINI GAMES ====================-->
+        <section class="section games" id="games" aria-labelledby="games-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">07</span>
+                    <h2 class="section__title" id="games-title">Mini games</h2>
+                    <p class="section__lead">Small canvas games I built for fun, in plain JavaScript. High scores are stored locally.</p>
+                    <span class="egg-counter" id="egg-counter" title="Hidden easter eggs found across the site"><i class="uil uil-bug" aria-hidden="true"></i> <span id="egg-count">0</span>/5 easter eggs found</span>
+                </header>
+
+                <div class="games__panel-wrap reveal">
+                    <div class="games__tabs" role="tablist" aria-label="Choose a game">
+                        <button type="button" class="games__tab" role="tab" id="tab-snake" aria-selected="true" aria-controls="game-snake" data-game="snake"><i class="uil uil-record-audio" aria-hidden="true"></i> Snake</button>
+                        <button type="button" class="games__tab" role="tab" id="tab-memory" aria-selected="false" aria-controls="game-memory" data-game="memory" tabindex="-1"><i class="uil uil-layer-group" aria-hidden="true"></i> Memory Match</button>
+                        <button type="button" class="games__tab" role="tab" id="tab-dino" aria-selected="false" aria-controls="game-dino" data-game="dino" tabindex="-1"><i class="uil uil-game-structure" aria-hidden="true"></i> Cube Run</button>
+                    </div>
+
+                    <!-- SNAKE -->
+                    <div class="games__panel active" id="game-snake" role="tabpanel" aria-labelledby="tab-snake">
+                        <div class="games__head">
+                            <div class="games__stats">
+                                <span class="games__stat">Score <strong id="snake-score">0</strong></span>
+                                <span class="games__stat">Best <strong id="snake-best">0</strong></span>
+                            </div>
+                            <button type="button" class="button button--ghost button--sm" id="snake-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                        </div>
+                        <canvas id="snake-canvas" width="400" height="400" tabindex="0" role="img" aria-label="Snake game board — click or focus, then steer with the arrow keys"></canvas>
+                        <p class="games__hint">Click the board, then use arrow keys / WASD — or the buttons on touch devices.</p>
+                        <div class="snake__dpad">
+                            <button type="button" class="up" data-dir="up" aria-label="Up"><i class="uil uil-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="left" data-dir="left" aria-label="Left"><i class="uil uil-angle-left" aria-hidden="true"></i></button>
+                            <button type="button" class="down" data-dir="down" aria-label="Down"><i class="uil uil-angle-down" aria-hidden="true"></i></button>
+                            <button type="button" class="right" data-dir="right" aria-label="Right"><i class="uil uil-angle-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- MEMORY -->
+                    <div class="games__panel" id="game-memory" role="tabpanel" aria-labelledby="tab-memory" hidden>
+                        <div class="games__head">
+                            <div class="games__stats">
+                                <span class="games__stat">Moves <strong id="memory-moves">0</strong></span>
+                                <span class="games__stat">Matches <strong id="memory-matches">0</strong>/8</span>
+                                <span class="games__stat">Time <strong id="memory-time">0s</strong></span>
+                                <span class="games__stat">Best <strong id="memory-best">—</strong></span>
+                            </div>
+                            <button type="button" class="button button--ghost button--sm" id="memory-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                        </div>
+                        <div class="memory__board" id="memory-board"></div>
+                    </div>
+
+                    <!-- CUBE RUN -->
+                    <div class="games__panel" id="game-dino" role="tabpanel" aria-labelledby="tab-dino" hidden>
+                        <div class="games__head">
+                            <div class="games__stats">
+                                <span class="games__stat">Score <strong id="dino-score">0</strong></span>
+                                <span class="games__stat">Best <strong id="dino-best">0</strong></span>
+                            </div>
+                            <button type="button" class="button button--ghost button--sm" id="dino-restart"><i class="uil uil-redo" aria-hidden="true"></i> Restart</button>
+                        </div>
+                        <canvas id="dino-canvas" width="600" height="200" tabindex="0" role="img" aria-label="Cube Run game — click or focus, then press Space to jump"></canvas>
+                        <p class="games__hint">Click the canvas, then Space / ↑ to jump · ↓ to duck — or tap on touch devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--==================== CONTACT ====================-->
+        <section class="section contact" id="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <header class="section__head reveal">
+                    <span class="section__num">08</span>
+                    <h2 class="section__title" id="contact-title">Let's build something</h2>
+                    <p class="section__lead">Open to backend and infrastructure roles, interesting problems, or just a chat about systems. My inbox is always open.</p>
+                </header>
+
+                <div class="contact__grid">
+                    <div class="contact__side reveal" data-delay="1">
+                        <a class="contact__primary" href="mailto:maderahano@gmail.com">
+                            <span class="contact__primary-label">Email</span>
+                            <span class="contact__primary-value">maderahano@gmail.com</span>
+                            <i class="uil uil-arrow-up-right" aria-hidden="true"></i>
+                        </a>
+                        <ul class="contact__links">
+                            <li><a href="https://www.linkedin.com/in/maderahano/" target="_blank" rel="noopener"><i class="uil uil-linkedin-alt" aria-hidden="true"></i><span>LinkedIn</span><small>in/maderahano</small></a></li>
+                            <li><a href="https://github.com/maderahano" target="_blank" rel="noopener"><i class="uil uil-github-alt" aria-hidden="true"></i><span>GitHub</span><small>@maderahano</small></a></li>
+                            <li><a href="assets/pdf/Made-Rahano-CV.pdf" download><i class="uil uil-file-alt" aria-hidden="true"></i><span>Résumé</span><small>PDF</small></a></li>
+                            <li class="contact__links-static"><i class="uil uil-map-marker" aria-hidden="true"></i><span>Jakarta, Indonesia</span><small>UTC+7</small></li>
+                        </ul>
+                    </div>
+
+                    <!-- Static contact form.
+                         Default: opens the visitor's email client via mailto (no backend needed).
+                         With data-formspree set, submissions are POSTed to Formspree instead. -->
+                    <form class="contact__form reveal" id="contact-form" data-delay="2" data-formspree="https://formspree.io/f/xzdlepqd" novalidate>
+                        <div class="contact__row">
+                            <div class="field">
+                                <label for="cf-name">Name</label>
+                                <input type="text" id="cf-name" name="name" autocomplete="name" required>
+                            </div>
+                            <div class="field">
+                                <label for="cf-email">Email</label>
+                                <input type="email" id="cf-email" name="email" autocomplete="email" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="cf-subject">Subject <span class="field__opt">optional</span></label>
+                            <input type="text" id="cf-subject" name="subject">
+                        </div>
+                        <div class="field">
+                            <label for="cf-message">Message</label>
+                            <textarea id="cf-message" name="message" rows="6" required></textarea>
+                        </div>
+                        <div class="contact__form-foot">
+                            <p class="contact__form-note" id="cf-status" aria-live="polite"></p>
+                            <button type="submit" class="button">Send message <i class="uil uil-message" aria-hidden="true"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--==================== FOOTER ====================-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <a href="#home" class="nav__logo" aria-label="Back to top">
+                        <span class="nav__logo-mark" aria-hidden="true">MR</span>
+                        <span class="nav__logo-text">Made Rahano</span>
+                    </a>
+                    <p class="footer__tag">Backend Infrastructure Engineer · Jakarta, Indonesia</p>
+                </div>
+                <nav class="footer__nav" aria-label="Footer">
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#games">Mini Games</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <ul class="footer__social" id="footer-social" aria-label="Social links"></ul>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; <span id="year"></span> Made Rahano. All rights reserved.</p>
+                <p class="footer__built">Built with plain HTML, CSS &amp; JavaScript — no framework, no build step.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--==================== ACHIEVEMENT POPUP + TOASTS ====================-->
+    <div class="achv" id="achv" role="status" aria-live="polite">
+        <span class="achv__icon" aria-hidden="true"><i class="uil uil-trophy"></i></span>
+        <div>
+            <div class="achv__label">Achievement unlocked</div>
+            <div class="achv__title" id="achv-title"></div>
+            <div class="achv__sub" id="achv-sub"></div>
+        </div>
+    </div>
+    <div id="toast-wrap" role="status" aria-live="polite"></div>
+
+    <!--==================== BACK TO TOP ====================-->
+    <a href="#home" class="scrollup" id="scroll-up" aria-label="Back to top"><i class="uil uil-arrow-up" aria-hidden="true"></i></a>
+
+    <!--==================== SCRIPTS ====================-->
+    <script src="assets/js/data.js" defer></script>
+    <script src="assets/js/games.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</body>
 </html>
